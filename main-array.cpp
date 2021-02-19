@@ -98,7 +98,7 @@ void pushArray(int *&array, int size, int number) {
 }
 
 // Funkcija Studento įrašo pridėjimui į dinaminį masyvą
-void pushStudent(Student *&array, int &size, Student &student) {
+void pushStudent(Student *&array, int &size, Student student) {
     Student *temp = new Student[size + 1];
     for (int i = 0; i < size; i++) {
         temp[i] = array[i];
