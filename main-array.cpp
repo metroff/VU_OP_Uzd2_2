@@ -97,6 +97,18 @@ void pushArray(int *&array, int size, int number) {
     array = temp;
 }
 
+// Funkcija Studento įrašo pridėjimui į dinaminį masyvą
+void pushStudent(Student *&array, int &size, Student &student) {
+    Student *temp = new Student[size + 1];
+    for (int i = 0; i < size; i++) {
+        temp[i] = array[i];
+    }
+    temp[size] = student;
+    delete[] array;
+    array = temp;
+    size++;
+}
+
 // Sugeneruojami pažymiai
 void generateGrades(Student &student) {
     // Nustatomas pažymių kiekis
@@ -187,7 +199,9 @@ void printResults(Student &student) {
 int main() {
     srand(time(NULL));
 
-    vector<Student> students;
+    int numOfStudents = 0;
+    Student *students = new Student[numOfStudents];
+    
     bool useMean = true;
 
     while (true) {
@@ -213,7 +227,7 @@ int main() {
             student.examGrade = getGrade();
         }
 
-        students.push_back(student);
+        pushStudent(students, numOfStudents, student);
 
         cout << endl;
 
@@ -237,11 +251,14 @@ int main() {
     cout << endl << lineString << endl;
 
     // Perrenkamas kiekvienas studentas
-    for (auto student : students) {
+    for (int i = 0; i < numOfStudents; i++) {
+        Student student = students[i];
         calculateFinalGrade(student, useMean);
         printResults(student);
         delete[] student.grades;
     }
+
+    delete[] students;
 
     return 0;
 }
