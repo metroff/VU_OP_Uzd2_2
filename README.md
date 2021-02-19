@@ -58,3 +58,4 @@ Vardenis       Pavardenis      7.76
 ## Changelog
 
 - [v0.1](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.1) - Šioje versijoje realizuotas studentų ir jų pažymių įvedimas. Pažymiams suagoti buvo naudojami: C kalbos masyvas `main-array.cpp` ir vektorius `main-vector.cpp`. Pažymiai gali būti atsitiktinai generuojami, o galutinis įvertinimas gali būti paskaičiuotas naudojant **Vidurkį** arba **Medianą**.
+    - [v0.1.1](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.1.1) - Studentai saugomi C kalbos masyve `main-array.cpp`.
