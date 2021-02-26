@@ -4,6 +4,8 @@
 #include <random>
 #include <string>
 #include <vector>
+#include <fstream>
+
 
 #define GRADE_MIN 1
 #define GRADE_MAX 10
@@ -21,12 +23,13 @@ using std::sort;
 using std::streamsize;
 using std::string;
 using std::vector;
+using std::ifstream;
+using std::ofstream;
 
 struct Student {
     string firstName;
     string lastName;
-    int numOfGrades;
-    int *grades;
+    vector<int> grades;
     int examGrade;
     double finalGrade;
     double processedGrades;
@@ -86,43 +89,17 @@ bool yesNoQuestion(string question) {
     return answer == "y";
 }
 
-// Funkcija skaičiaus pridėjimui į dinaminį masyvą
-void pushArray(int *&array, int size, int number) {
-    int *temp = new int[size + 1];
-    for (int i = 0; i < size; i++) {
-        temp[i] = array[i];
-    }
-    temp[size] = number;
-    delete[] array;
-    array = temp;
-}
-
-// Funkcija Studento įrašo pridėjimui į dinaminį masyvą
-void pushStudent(Student *&array, int &size, Student student) {
-    Student *temp = new Student[size + 1];
-    for (int i = 0; i < size; i++) {
-        temp[i] = array[i];
-    }
-    temp[size] = student;
-    delete[] array;
-    array = temp;
-    size++;
-}
-
 // Sugeneruojami pažymiai
-void generateGrades(Student &student) {
+void generateGrades(Student &student, int numOfGrades) {
     // Nustatomas pažymių kiekis
-    int numOfGrades = student.numOfGrades;
     if (numOfGrades == -1) {
         numOfGrades = (rand() % 10) + 1;
-        student.numOfGrades = numOfGrades;
     }
-    student.grades = new int[numOfGrades];
     // Sugeneruojami ir išspausdinami pažymaiai
     cout << "Sugeneruoti " << numOfGrades << " pazymiai: ";
     for (int i = 0; i < numOfGrades; i++) {
         int grade = (rand() % 10) + 1;
-        student.grades[i] = grade;
+        student.grades.push_back(grade);
         cout << grade << " ";
     }
     student.examGrade = (rand() % 10) + 1;
@@ -130,11 +107,10 @@ void generateGrades(Student &student) {
 }
 
 // Pažymių įvedimas rankiniu budu
-void inputGrades(Student &student) {
+void inputGrades(Student &student, int numOfGrades) {
     // Nustatoma ar žinomas pažymių kiekis
-    if (student.numOfGrades == -1) {
+    if (numOfGrades == -1) {
         int numOfGrades = 0;
-        student.grades = new int[numOfGrades];
         //Pateikiama užklausa pažymių įvedimui.
         cout << "Iveskite pazymius. (Iveskite -1, jei norite pabaigti).\n";
         while (true) {
@@ -142,37 +118,35 @@ void inputGrades(Student &student) {
             int grade = getGrade(true);
             if (grade == -1)
                 break;
-            pushArray(student.grades, numOfGrades, grade);
+            student.grades.push_back(grade);
             numOfGrades++;
         }
-        student.numOfGrades = numOfGrades;
     } else {
         //Pateikiama užklausa pažymių įvedimui.
-        student.grades = new int[student.numOfGrades];
-        for (int i = 0; i < student.numOfGrades; i++) {
+        for (int i = 0; i < numOfGrades; i++) {
             cout << "Iveskite " << i + 1 << " pazymi: ";
-            student.grades[i] = getGrade();
+            student.grades.push_back(getGrade());
         }
     }
     cout << "Iveskite egzamino pazymi: ";
     student.examGrade = getGrade();
 }
 
-// Skaičiuojamas galutinis pazymys
+// Skaičiuojamas galutinis pažymys
 void calculateFinalGrade(Student &student, bool useMean) {
-    int numOfGrades = student.numOfGrades;
+    int numOfGrades = student.grades.size();
     // Patikrinama ar yra pažymių
     if (numOfGrades != 0) {
         if (useMean) {
             // Nuadojant vidurkį
             double sum = 0;
-            for (int i = 0; i < numOfGrades; i++) {
-                sum += student.grades[i];
+            for (auto grade: student.grades) {
+                sum += grade;
             }
             student.processedGrades = sum / numOfGrades;
         } else {
             // Naudojant medianą
-            sort(student.grades, student.grades + numOfGrades);
+            sort(student.grades.begin(), student.grades.end());
             int index = numOfGrades / 2;
             if (numOfGrades % 2 == 0) {
                 student.processedGrades = (double)(student.grades[index - 1] + student.grades[index]) / 2.0;
@@ -183,7 +157,7 @@ void calculateFinalGrade(Student &student, bool useMean) {
     } else {
         student.processedGrades = 0;
     }
-    // Išvedamas galutinis pazymys
+    // Išvedamas galutinis pažymys
     student.finalGrade = 0.4 * student.processedGrades + 0.6 * student.examGrade;
 }
 
@@ -196,50 +170,109 @@ void printResults(Student &student) {
     cout << endl;
 }
 
+
+bool checkIfFileExists(string fileName){
+    ifstream file(fileName);
+    return file.good();
+}
+
+bool shouldReadFromFile(string fileName){
+    if (checkIfFileExists(fileName)) {
+        if (yesNoQuestion("Ar noretumete duomenis nuskaityti is failo?")){
+            cout << "Duomenys nuskaitomi is failo.\n";
+            clearLine();
+            return true;
+        } else {
+            cout << "Pereinama prie rankinio duomenu ivedimo.\n";
+            clearLine();
+            return false;
+        }
+    } else {
+        cout << "Failas "+fileName+" nerastas. Pereinama prie rankinio duomenu ivedimo.\n";
+        return false;
+    }
+}
+
+void readFromFile(string fileName, vector<Student> &students){
+    std::stringstream ss;
+    ifstream file(fileName);
+    if (file.is_open())
+        ss << file.rdbuf();
+        file.close();
+
+        string line;
+        getline(ss, line);
+
+        while(getline(ss, line)) {
+            Student student;
+
+            std::stringstream line_stream(line);
+            line_stream >> student.firstName;
+            line_stream >> student.lastName;
+
+            int grade;
+
+            while(!line_stream.eof()) {
+                line_stream >> grade;
+                student.grades.push_back(grade);
+            }
+
+            student.examGrade = student.grades.back();
+            student.grades.pop_back();
+
+            students.push_back(student);
+        }
+}
+
 int main() {
     srand(time(NULL));
 
-    int numOfStudents = 0;
-    Student *students = new Student[numOfStudents];
-    
+    string fileName = "kursiokai.txt";
+    vector<Student> students;
     bool useMean = true;
 
-    while (true) {
-        Student student;
+    if(shouldReadFromFile(fileName)) {
+        readFromFile(fileName, students);
+    } else {
 
-        cout << "Iveskite studento varda: ";
-        getline(cin, student.firstName);
+        while (true) {
+            Student student;
 
-        cout << "Iveskite studento pavarde: ";
-        getline(cin, student.lastName);
+            cout << "Iveskite studento varda: ";
+            getline(cin, student.firstName);
 
-        student.numOfGrades = -1;
-        if (yesNoQuestion("Ar zinote pazymiu kieki?"))
-            student.numOfGrades = getNumOfGrades();
+            cout << "Iveskite studento pavarde: ";
+            getline(cin, student.lastName);
+            
+            int numOfGrades = -1;
+            if (yesNoQuestion("Ar zinote pazymiu kieki?"))
+                numOfGrades = getNumOfGrades();
 
-        if (student.numOfGrades != 0) {
-            if (yesNoQuestion("Ar norite atsitiktinai sugeneruoti pazymius?"))
-                generateGrades(student);
-            else
-                inputGrades(student);
-        } else {
-            cout << "Iveskite egzamino pazymi: ";
-            student.examGrade = getGrade();
+            if (numOfGrades != 0) {
+                if (yesNoQuestion("Ar norite atsitiktinai sugeneruoti pazymius?"))
+                    generateGrades(student, numOfGrades);
+                else
+                    inputGrades(student, numOfGrades);
+            } else {
+                cout << "Iveskite egzamino pazymi: ";
+                student.examGrade = getGrade();
+            }
+
+            students.push_back(student);
+
+            cout << endl;
+
+            if (!yesNoQuestion("Ivesti dar viena studenta?"))
+                break;
+
+            cout << endl;
+
+            clearLine();
         }
 
-        pushStudent(students, numOfStudents, student);
-
-        cout << endl;
-
-        if (!yesNoQuestion("Ivesti dar viena studenta?"))
-            break;
-
-        cout << endl;
-
-        clearLine();
     }
 
-    if (yesNoQuestion("Skaičiavimams naudoti mediana? (y-mediana, n-vidurkis)"))
+    if (yesNoQuestion("Skaiciavimams naudoti mediana? (y-mediana, n-vidurkis)"))
         useMean = false;
 
     // Atspausdinami lenteles stulpelių pavadinimai
@@ -251,14 +284,10 @@ int main() {
     cout << endl << lineString << endl;
 
     // Perrenkamas kiekvienas studentas
-    for (int i = 0; i < numOfStudents; i++) {
-        Student student = students[i];
+    for (auto student : students) {
         calculateFinalGrade(student, useMean);
         printResults(student);
-        delete[] student.grades;
     }
-
-    delete[] students;
 
     return 0;
 }
