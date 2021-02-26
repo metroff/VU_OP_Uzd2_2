@@ -132,27 +132,30 @@ void inputGrades(Student &student, int numOfGrades) {
     student.examGrade = getGrade();
 }
 
+double findMean(vector<int> &array) {
+    double sum = 0;
+    for (auto number: array) {
+        sum += number;
+    }
+    return sum/array.size();
+}
+
+double findMedian(vector<int> &array) {
+    sort(array.begin(), array.end());
+    int index = array.size() / 2;
+    return (array.size()%2==0) ? (double)(array[index-1]+array[index])/2.0 : (double)array[index];
+}
+
 // Skaičiuojamas galutinis pažymys
 void calculateFinalGrade(Student &student, bool useMean) {
-    int numOfGrades = student.grades.size();
     // Patikrinama ar yra pažymių
-    if (numOfGrades != 0) {
+    if (student.grades.size() != 0) {
         if (useMean) {
             // Nuadojant vidurkį
-            double sum = 0;
-            for (auto grade: student.grades) {
-                sum += grade;
-            }
-            student.processedGrades = sum / numOfGrades;
+            student.processedGrades = findMean(student.grades);
         } else {
             // Naudojant medianą
-            sort(student.grades.begin(), student.grades.end());
-            int index = numOfGrades / 2;
-            if (numOfGrades % 2 == 0) {
-                student.processedGrades = (double)(student.grades[index - 1] + student.grades[index]) / 2.0;
-            } else {
-                student.processedGrades = (double)student.grades[index];
-            }
+            student.processedGrades = findMedian(student.grades);
         }
     } else {
         student.processedGrades = 0;
