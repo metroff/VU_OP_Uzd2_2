@@ -31,9 +31,11 @@ struct Student {
     string lastName;
     vector<int> grades;
     int examGrade;
-    double finalGrade;
-    double processedGrades;
+    double finalMeanGrade;
+    double finalMedianGrade;
 };
+
+enum CalculationType {MEAN, MEDIAN, BOTH};
 
 // Išvalomi įvesti simboliai
 void clearLine() {
@@ -135,6 +137,8 @@ void inputGrades(Student &student, int numOfGrades) {
 
 // Skaičiuojamas vidurkis
 double findMean(vector<int> &array) {
+    if (array.empty())
+        return 0;
     double sum = 0;
     for (auto number: array) {
         sum += number;
@@ -144,55 +148,54 @@ double findMean(vector<int> &array) {
 
 // Skaičiuojama mediana
 double findMedian(vector<int> &array) {
+    if (array.empty())
+        return 0;
     sort(array.begin(), array.end());
     int index = array.size() / 2;
     return (array.size()%2==0) ? (double)(array[index-1]+array[index])/2.0 : (double)array[index];
 }
 
 // Skaičiuojamas galutinis pažymys
-void calculateFinalGrade(Student &student, bool useMean) {
-    // Patikrinama ar yra pažymių
-    if (student.grades.size() != 0) {
-        if (useMean) {
-            // Nuadojant vidurkį
-            student.processedGrades = findMean(student.grades);
-        } else {
-            // Naudojant medianą
-            student.processedGrades = findMedian(student.grades);
-        }
-    } else {
-        student.processedGrades = 0;
-    }
+void calculateFinalGrade(Student &student) {
+    // Nuadojant vidurkį
+    double mean = findMean(student.grades);
+    // Naudojant medianą
+    double median = findMedian(student.grades);
+
     // Išvedamas galutinis pažymys
-    student.finalGrade = 0.4 * student.processedGrades + 0.6 * student.examGrade;
+    double finalExamGrade = 0.6 * student.examGrade;
+    student.finalMeanGrade = 0.4 * mean + finalExamGrade;
+    student.finalMedianGrade = 0.4 * median + finalExamGrade;
 }
 
 // Atspausdinama studento info
-void printResult(Student &student) {
-    cout << left
-         << setw(15) << student.firstName
-         << setw(16) << student.lastName
-         << fixed << setprecision(2) << student.finalGrade;
-    cout << endl;
-}
-
-void printResults(vector<Student> &students) {
+void printResults(vector<Student> &students, bool useFile=false) {
     std::stringstream outputLine;
+    string lineString = string(54, '-');
+
+    outputLine << left
+        << setw(16) << "Vardas"
+        << setw(16) << "Pavarde"
+        << "Galutinis " << (true ? "(Vid.)" : "(Med.)");
+    outputLine << endl << lineString << endl;
+
     for(auto student : students){
-        calculateFinalGrade(student, true);
-        outputLine << left
-            << setw(15) << student.firstName
+        calculateFinalGrade(student);
+        outputLine << setw(16) << student.firstName
             << setw(16) << student.lastName
-            << fixed << setprecision(2) << student.finalGrade
+            << setw(16) << fixed << setprecision(2) << student.finalMeanGrade
             << endl;
     }
-    // ofstream outf("rez.txt");
-    // outf << outputLine.str();
-    // outf.close();
-    cout << outputLine.str();
+    if (useFile){
+        ofstream outf("rezultatai.txt");
+        outf << outputLine.rdbuf();
+        outf.close();
+    } else {
+        cout << outputLine.str();
+    }
 }
 
-
+// TODO: Check for better approach
 bool checkIfFileExists(string fileName){
     ifstream file(fileName);
     return file.good();
@@ -231,6 +234,7 @@ void manualInput(vector<Student> &students) {
         cout << endl;
 
         if (!yesNoQuestion("Ivesti dar viena studenta?"))
+            cout << endl;
             break;
 
         cout << endl;
@@ -289,34 +293,20 @@ int main() {
 
     string fileName = "kursiokai.txt";
     vector<Student> students;
-    bool useMean = true;
+    bool useFile = true;
 
     if(yesNoQuestion("Ar noretumete duomenis nuskaityti is failo?")){
         readFromFile(fileName, students);
     }else{
+        useFile = false;
         manualInput(students);
     }
 
     if(students.size() > 0){
 
-        if (yesNoQuestion("Skaiciavimams naudoti mediana? (y-mediana, n-vidurkis)"))
-            useMean = false;
+        //if (yesNoQuestion("Skaiciavimams naudoti mediana? (y-mediana, n-vidurkis)"))
 
-        // Atspausdinami lenteles stulpelių pavadinimai
-        string lineString = string(50, '-');
-        cout << endl << left
-            << setw(15) << "Vardas"
-            << setw(16) << "Pavarde"
-            << "Galutinis " << (useMean ? "(Vid.)" : "(Med.)");
-        cout << endl << lineString << endl;
-
-        // Perrenkamas kiekvienas studentas
-        // for (auto student : students) {
-        //     calculateFinalGrade(student, useMean);
-        //     //printResult(student);
-        // }
-
-        printResults(students);
+        printResults(students, useFile);
 
         students.clear();
     }
