@@ -35,7 +35,7 @@ struct Student {
     double finalMedianGrade;
 };
 
-enum CalculationType {MEAN, MEDIAN, BOTH};
+enum class OutputType {MEAN, MEDIAN, BOTH};
 
 // Išvalomi įvesti simboliai
 void clearLine() {
@@ -90,6 +90,24 @@ bool yesNoQuestion(string question) {
     }
     clearLine();
     return answer == "y";
+}
+
+OutputType getOutputType() {
+    int answer = 0;
+    while (answer < 1 || answer > 3) {
+        cout << "Skaiciuoti naudojant (1) Vidurki, (2) Mediana, (3) Abu.\nPasirinkite (1-3): ";
+        cin >> answer;
+        if (cin.fail())
+            clearLine();
+    }
+    clearLine();
+    int choice;
+    if(answer == 1){
+        return OutputType::MEAN;
+    } else if (answer == 2) {
+        return OutputType::MEDIAN;
+    }
+    return OutputType::BOTH;
 }
 
 // Sugeneruojami pažymiai
@@ -169,22 +187,37 @@ void calculateFinalGrade(Student &student) {
 }
 
 // Atspausdinama studento info
-void printResults(vector<Student> &students, bool useFile=false) {
-    std::stringstream outputLine;
-    string lineString = string(54, '-');
+void printResults(vector<Student> &students,  OutputType type, bool useFile=false) {
+    int length = 52;
 
-    outputLine << left
+    std::stringstream outputLine;
+
+    outputLine << left << fixed
         << setw(16) << "Vardas"
-        << setw(16) << "Pavarde"
-        << "Galutinis " << (true ? "(Vid.)" : "(Med.)");
-    outputLine << endl << lineString << endl;
+        << setw(16) << "Pavarde";
+    if (type == OutputType::MEAN){
+        outputLine << setw(20) << "Galutinis (Vid.)";
+    } else if (type == OutputType::MEDIAN) {
+        outputLine << setw(20) << "Galutinis (Med.)";
+    } else {
+        outputLine << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)";
+        length += 20;
+    }
+    outputLine << endl << string(length, '-') << endl;
 
     for(auto student : students){
         calculateFinalGrade(student);
         outputLine << setw(16) << student.firstName
-            << setw(16) << student.lastName
-            << setw(16) << fixed << setprecision(2) << student.finalMeanGrade
-            << endl;
+            << setw(16) << student.lastName;
+        if (type == OutputType::MEAN){
+            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
+        } else if (type == OutputType::MEDIAN) {
+            outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
+        } else {
+            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
+            outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
+        }       
+        outputLine << endl;
     }
     if (useFile){
         ofstream outf("rezultatai.txt");
@@ -233,9 +266,10 @@ void manualInput(vector<Student> &students) {
 
         cout << endl;
 
-        if (!yesNoQuestion("Ivesti dar viena studenta?"))
+        if (!yesNoQuestion("Ivesti dar viena studenta?")) {
             cout << endl;
             break;
+        }  
 
         cout << endl;
     }
@@ -262,7 +296,7 @@ void readFromFile(string fileName, vector<Student> &students){
                 line_stream >> student.lastName;
 
                 int grade;
-
+                
                 while(line_stream >> grade) {
                     if(line_stream.fail() || !isValidGrade(grade)){
                         cout << "Nuskaitymo klaida " << lineNum << " eileje.\n" 
@@ -304,9 +338,9 @@ int main() {
 
     if(students.size() > 0){
 
-        //if (yesNoQuestion("Skaiciavimams naudoti mediana? (y-mediana, n-vidurkis)"))
+        OutputType outputType = getOutputType();
 
-        printResults(students, useFile);
+        printResults(students, outputType, useFile);
 
         students.clear();
     }
