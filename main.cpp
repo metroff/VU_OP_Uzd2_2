@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <sys/stat.h>
 
 #define GRADE_MIN 1
 #define GRADE_MAX 10
@@ -186,8 +187,14 @@ void calculateFinalGrade(Student &student) {
     student.finalMedianGrade = 0.4 * median + finalExamGrade;
 }
 
+bool compareStudents(Student a, Student b) {
+    return (a.lastName == b.lastName) ? a.firstName < b.firstName : a.lastName < b.lastName;
+}
+
 // Atspausdinama studento info
 void printResults(vector<Student> &students,  OutputType type, bool useFile=false) {
+    sort(students.begin(), students.end(), compareStudents);
+
     int length = 52;
 
     std::stringstream outputLine;
@@ -195,6 +202,7 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
     outputLine << left << fixed
         << setw(16) << "Vardas"
         << setw(16) << "Pavarde";
+        
     if (type == OutputType::MEAN){
         outputLine << setw(20) << "Galutinis (Vid.)";
     } else if (type == OutputType::MEDIAN) {
@@ -223,12 +231,12 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
         ofstream outf("rezultatai.txt");
         outf << outputLine.rdbuf();
         outf.close();
+        cout << "Duomenys irasyti i rezultatai.txt faila." << endl;
     } else {
-        cout << outputLine.str();
+        cout << endl << outputLine.str();
     }
 }
 
-// TODO: Check for better approach
 bool checkIfFileExists(string fileName){
     ifstream file(fileName);
     return file.good();
@@ -327,18 +335,18 @@ int main() {
 
     string fileName = "kursiokai.txt";
     vector<Student> students;
-    bool useFile = true;
 
     if(yesNoQuestion("Ar noretumete duomenis nuskaityti is failo?")){
         readFromFile(fileName, students);
     }else{
-        useFile = false;
         manualInput(students);
     }
 
     if(students.size() > 0){
 
         OutputType outputType = getOutputType();
+
+        bool useFile = yesNoQuestion("Rezultatus pateikti faile?");
 
         printResults(students, outputType, useFile);
 
