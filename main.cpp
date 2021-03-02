@@ -93,6 +93,7 @@ bool yesNoQuestion(string question) {
     return answer == "y";
 }
 
+// Sužinoma kokį skaičiavimo budą naudoti
 OutputType getOutputType() {
     int answer = 0;
     while (answer < 1 || answer > 3) {
@@ -102,7 +103,7 @@ OutputType getOutputType() {
             clearLine();
     }
     clearLine();
-    int choice;
+
     if(answer == 1){
         return OutputType::MEAN;
     } else if (answer == 2) {
@@ -199,6 +200,7 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
 
     std::stringstream outputLine;
 
+    // Išvedami stulpelių pavadinimai
     outputLine << left << fixed
         << setw(16) << "Vardas"
         << setw(16) << "Pavarde";
@@ -213,6 +215,7 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
     }
     outputLine << endl << string(length, '-') << endl;
 
+    // Išvedama studentų info
     for(auto student : students){
         calculateFinalGrade(student);
         outputLine << setw(16) << student.firstName
@@ -246,6 +249,7 @@ bool isValidGrade(int grade){
     return (grade >= GRADE_MIN && grade <= GRADE_MAX);
 }
 
+// Duomenų įvedimas rankiniu būdu
 void manualInput(vector<Student> &students) {
     while (true) {
         Student student;
@@ -283,9 +287,11 @@ void manualInput(vector<Student> &students) {
     }
 }
 
+// Duomenų įvedimas nuskaitant iš failo
 void readFromFile(string fileName, vector<Student> &students){
     if(checkIfFileExists(fileName)) {
         std::stringstream ss;
+        // Nuskaitomas visas failas
         ifstream file(fileName);
         if (file.is_open())
             ss << file.rdbuf();
@@ -295,7 +301,7 @@ void readFromFile(string fileName, vector<Student> &students){
             getline(ss, line);
 
             int lineNum = 1;
-
+            // Dalinama eilutėmis
             while(getline(ss, line)) {
                 Student student;
 
