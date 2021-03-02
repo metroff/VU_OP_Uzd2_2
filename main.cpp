@@ -237,9 +237,9 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
     }
 }
 
-bool checkIfFileExists(string fileName){
-    ifstream file(fileName);
-    return file.good();
+bool checkIfFileExists(string& fileName){
+    struct stat buffer;
+    return (stat(fileName.c_str(), &buffer)==0);
 }
 
 bool isValidGrade(int grade){
