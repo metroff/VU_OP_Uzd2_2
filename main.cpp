@@ -232,7 +232,7 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile=fals
     }
     if (useFile){
         ofstream outf("rezultatai.txt");
-        outf << outputLine.rdbuf();
+        outf << outputLine.str();
         outf.close();
         cout << "Duomenys irasyti i rezultatai.txt faila." << endl;
     } else {
