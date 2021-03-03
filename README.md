@@ -1,10 +1,10 @@
 # Studentų pažymių apskaitos programa
 
-Programa, kuri yra skirta apskaičiuoti studento galutinį pažymį.
+Programa, kuri yra skirta studento galutinio pažymio skaičiavimui. Programa išveda studentų pasiekimų ataskaita pagal namų darbų, egzamino pažymius bei pasirinktą skaičiavimo būdą.
 
 ## Naudojimosi instrukcija
 
-Paleidus programą, komandinėje eilutėje reikės
+Paleidus programą, komandinėje eilutėje reikės:
 
 * Pasirinkti, kad būtų duomenys nuskaitomi iš failo\
   ----------- Arba -----------
@@ -44,7 +44,7 @@ Programa paskaičiuoja visų pažymių vidurkį ar medianą ir išveda galutinį
 ```shell
 >> Ivesti dar viena studenta? (y/n): n
 ```
-7. Leidžiama pasirinkti vidurkį ar medianą galutinio balo skaičiavimui.
+7. Leidžiama pasirinkti vidurkį ar/ir medianą galutinio balo skaičiavimui.
 > Galutinis balas = 0.4 * pažymių (vidurkis / mediana) + 0.6 * egzamino pažymys.
 ```shell
 >> Skaiciuoti naudojant (1) Vidurki, (2) Mediana, (3) Abu.

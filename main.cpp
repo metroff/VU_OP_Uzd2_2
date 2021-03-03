@@ -311,7 +311,7 @@ void readFromFile(string fileName, vector<Student> &students){
 
                 int grade;
                 
-                while(line_stream >> grade) {
+                while(line_stream >> grade || !line_stream.eof()) {
                     if(line_stream.fail() || !isValidGrade(grade)){
                         cout << "Nuskaitymo klaida " << lineNum << " eileje.\n" 
                         << "Programa uzdaroma.\n";
