@@ -38,6 +38,7 @@ void readFromFile(string fileName, vector<Student> &students){
                     }
                 } catch (GradeException) {
                     cout << "Nuskaitymo klaida " << lineNum << " eileje. Studentas praleistas.\n";
+                    student.grades.clear();
                     lineNum++;
                     continue;
                 }
