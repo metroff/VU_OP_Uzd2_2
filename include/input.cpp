@@ -2,18 +2,19 @@
 
 // Sugeneruojami pažymiai
 void generateGrades(Student &student, int numOfGrades) {
+    RandInt rnd{1, 10};
     // Nustatomas pažymių kiekis
     if (numOfGrades == -1) {
-        numOfGrades = (rand() % 10) + 1;
+        numOfGrades = rnd();
     }
     // Sugeneruojami ir išspausdinami pažymaiai
     cout << "Sugeneruoti " << numOfGrades << " pazymiai: ";
     for (int i = 0; i < numOfGrades; i++) {
-        int grade = (rand() % 10) + 1;
+        int grade = rnd();
         student.grades.push_back(grade);
         cout << grade << " ";
     }
-    student.examGrade = (rand() % 10) + 1;
+    student.examGrade = rnd();
     cout << "\nSugeneruotas galutinis pazymys: " << student.examGrade << endl;
 }
 

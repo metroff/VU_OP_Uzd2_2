@@ -8,8 +8,6 @@
 #include <exception>
 
 int main() {
-    srand(time(NULL));
-
     string message = "";
     string fileName = "kursiokai.txt";
     vector<Student> students;
@@ -25,10 +23,7 @@ int main() {
         } catch (std::exception& e){
             error = true;
             cout << "Klaida: " << e.what();
-            message = " Pildyti rankiniu budu?";
-        } catch (...) {
-            error = true;
-            message = "Ivyko nuskaitymo klaida. Pildyti rankiniu budu?";
+            message = "\nPildyti rankiniu budu?";
         }
 
         if(error) {
