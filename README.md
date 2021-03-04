@@ -13,6 +13,9 @@ Paleidus programą, komandinėje eilutėje reikės:
 
 > Programoje galima pasirinkti, kad pažymiai būtų generuojami automatiškai (RANDOM).
 
+* Pasirinkti skaičiavimo būdą
+* Pasirinkti duomenų išvedimo vietą
+
 Programa paskaičiuoja visų pažymių vidurkį ar medianą ir išveda galutinį balą.
 
 ### Programos vykdymo eiga
@@ -63,11 +66,15 @@ Vardenis       Pavardenis      7.76
 ## Įdiegimo instrukcija
 
 1. Iš [Releases](https://github.com/metroff/VU_OP_uzd2/releases) aplanko parsisiųskite vieną iš programos versijų ir ją išsiarchyvuokite.
-2. Susikompiliuoti `main.cpp` failą naudojant įrankius, kurie palaiko **C++11**.
+2. Susikompiliuoti `main.cpp` ir `include` aplanke esančius failus naudojant įrankius, kurie palaiko **C++11**.
+    - Naudojant g++ įrankį (Linux aplinkoje):
+    ```
+    g++ -std=c++11 include/*.cpp main.cpp -o main && ./main
+    ```
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
-
+- [v0.3](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.3) - Šioje versijoje `main.cpp` buvęs kodas išskirstytas į failus, kurie yra `include` aplanke. Taip pat, realizuotas `Išimmčių` (`Exception`) valdymas ir pagerintas atsitiktinių skaičių generavimas.
 - [v0.2](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.2) - Šioje versijoje realizuotas studentų informacijos nuskaitymas iš failo `kursiokai.txt`. Failo `kursiokai.txt` struktūra turėtų būti:
 > Studento vardas (tarpas) Studento pavardė (tarpas) N pažymių atskirtų tarpais (tarpas) Egzamino pažymys
 ```
