@@ -28,6 +28,7 @@ int main() {
 
         if(error) {
             if(yesNoQuestion(message)){
+                students.clear();
                 manualInput(students);
             } else {
                 cout << "Programa uzdaroma." << endl;
