@@ -28,8 +28,8 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile) {
     outputLine << endl << string(length, '-') << endl;
 
     // Išvedama studentų info
-    for(auto student : students){
-        calculateFinalGrade(student);
+    for(auto &student : students){
+        processGrades(student);
         outputLine << setw(16) << student.firstName
             << setw(16) << student.lastName;
         if (type == OutputType::MEAN){
