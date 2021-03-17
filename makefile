@@ -9,6 +9,8 @@ main: $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(CPPFLAGS) -c -o $@ $<
 clean_all:
+	rm $(OBJ_DIR)/*.o main
+clean_obj:
 	rm $(OBJ_DIR)/*.o
 clean:
 	rm main
