@@ -1,15 +1,12 @@
 #include "student.hpp"
 
-double calculateFinalGrade(int examGrade, double grade){
-    return 0.6 * examGrade + 0.4 * grade;
-}
-
-double calculateFinalGrade(int examGrade, vector<int> &grades, 
-                            double (*calcType)(vector<int>&) = findMean){
-    return calculateFinalGrade(examGrade, calcType(grades));
-}
-
 void processGrades(Student &student) {
-    student.finalMeanGrade = calculateFinalGrade(student.examGrade, student.grades);
-    student.finalMedianGrade = calculateFinalGrade(student.examGrade, student.grades, findMedian);
+    double finalExam = 0.6 * student.examGrade;
+    if (student.grades.size()==0){
+        student.finalMeanGrade = finalExam;
+        student.finalMedianGrade = finalExam;
+    } else {
+        student.finalMeanGrade = finalExam + 0.4 * findMean(student.grades);
+        student.finalMedianGrade = finalExam + 0.4 * findMedian(student.grades);
+    }
 }
