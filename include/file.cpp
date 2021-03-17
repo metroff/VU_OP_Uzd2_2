@@ -46,6 +46,8 @@ void readFromFile(string fileName, vector<Student> &students){
                 student.examGrade = student.grades.back();
                 student.grades.pop_back();
 
+                processGrades(student);
+
                 students.push_back(student);
 
                 lineNum++;

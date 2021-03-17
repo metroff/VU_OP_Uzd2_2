@@ -3,7 +3,7 @@
 #include "myLib.hpp"
 #include "struct.hpp"
 #include "console.hpp"
-#include "student.hpp"
+#include <algorithm>
 #include <sstream>
 
 using std::fixed;

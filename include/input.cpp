@@ -69,6 +69,8 @@ void manualInput(vector<Student> &students) {
             student.examGrade = getGrade();
         }
 
+        processGrades(student);
+
         students.push_back(student);
 
         cout << endl;
