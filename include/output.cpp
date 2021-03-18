@@ -5,7 +5,7 @@ bool compareStudents(Student a, Student b) {
 }
 
 // Atspausdinama studento info
-void printResults(vector<Student> &students,  OutputType type, bool useFile) {
+void printResults(vector<Student> &students,  OutputType type, bool useFile, string fileName, bool log) {
     sort(students.begin(), students.end(), compareStudents);
 
     int length = 52;
@@ -17,35 +17,36 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile) {
         << setw(16) << "Vardas"
         << setw(16) << "Pavarde";
         
-    if (type == OutputType::MEAN){
-        outputLine << setw(20) << "Galutinis (Vid.)";
-    } else if (type == OutputType::MEDIAN) {
-        outputLine << setw(20) << "Galutinis (Med.)";
-    } else {
+    if (type == OutputType::BOTH) {
         outputLine << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)";
         length += 20;
-    }
+    } else if (type == OutputType::MEAN){
+        outputLine << setw(20) << "Galutinis (Vid.)";
+    } else {
+        outputLine << setw(20) << "Galutinis (Med.)";
+    } 
     outputLine << endl << string(length, '-') << endl;
 
     // Išvedama studentų info
     for(auto &student : students){
         outputLine << setw(16) << student.firstName
             << setw(16) << student.lastName;
-        if (type == OutputType::MEAN){
+        if (type == OutputType::BOTH) {
             outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
-        } else if (type == OutputType::MEDIAN) {
             outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
+        } else if (type == OutputType::MEAN){
+            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
         } else {
-            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
             outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
-        }       
+        }     
         outputLine << endl;
     }
     if (useFile){
-        ofstream outf("rezultatai.txt");
+        ofstream outf(fileName);
         outf << outputLine.str();
         outf.close();
-        cout << "Duomenys irasyti i rezultatai.txt faila." << endl;
+        if (log)
+            cout << "Duomenys irasyti i rezultatai.txt faila." << endl;
     } else {
         cout << endl << outputLine.str();
     }

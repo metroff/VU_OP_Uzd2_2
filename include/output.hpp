@@ -8,4 +8,4 @@
 
 using std::fixed;
 
-void printResults(vector<Student> &,  OutputType, bool useFile=false);
+void printResults(vector<Student> &,  OutputType, bool useFile=false, string filename="rezultatai.txt", bool log = true);
