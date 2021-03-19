@@ -46,6 +46,8 @@ void readFromFile(string fileName, vector<Student> &students){
                 student.examGrade = student.grades.back();
                 student.grades.pop_back();
 
+                processGrades(student);
+
                 students.push_back(student);
 
                 lineNum++;
@@ -54,4 +56,33 @@ void readFromFile(string fileName, vector<Student> &students){
     } else {
         throw FileNotFound();
     }
+}
+
+// Sukuriamas failas su studentų info
+void generateFile(string fileName, int index) {
+    RandInt rng{1, 10};
+
+    std::stringstream outputLine;
+
+    // Išvedami stulpelių pavadinimai
+    outputLine << left
+        << setw(20) << "Vardas"
+        << setw(20) << "Pavarde"
+        << setw(20) << "Pazymiai";
+
+    // Išvedama studentų info į buffer'į
+    for(int i = 1; i <= index; i++) {
+        outputLine << endl
+            << setw(20) << ("Vardas" + std::to_string(i))
+            << setw(20) << ("Pavarde" + std::to_string(i));
+        
+        int gradeCount = rng();
+        for(int j=0; j <= gradeCount; j++){
+            outputLine << setw(10) << rng();
+        }
+    }
+    
+    ofstream outf(fileName);
+    outf << outputLine.str();
+    outf.close();
 }

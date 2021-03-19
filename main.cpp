@@ -5,9 +5,24 @@
 #include "include/input.hpp"
 #include "include/output.hpp"
 #include "include/file.hpp"
+#include "include/benchmark.hpp"
 #include <exception>
 
-int main() {
+int main(int argc, char* argv[]) {
+    if(argc>=2) {
+        if(string(argv[1]) == "-bench") {    
+            if(argc < 3) {
+                cout << "Usage: " << argv[0] << "-bench (stage [1-5])" << endl;
+                return 0;
+            }        
+            int stage = atoi(argv[2]);
+            if (stage > 0 && stage < 6)
+                runBenchmark(stage);
+            else cout << "Usage: " << argv[0] << "-bench (stage [1-5])" << endl;
+            return 0;
+        }
+    }
+
     string message = "";
     string fileName = "kursiokai.txt";
     vector<Student> students;

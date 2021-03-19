@@ -2,6 +2,6 @@
 
 #include "myLib.hpp"
 #include "struct.hpp"
-#include "algorithm"
+#include "math.hpp"
 
-void calculateFinalGrade(Student &);
+void processGrades(Student &);
