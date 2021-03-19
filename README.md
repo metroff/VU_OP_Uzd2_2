@@ -63,6 +63,19 @@ Vardas         Pavarde         Galutinis (Vid.)
 --------------------------------------------------
 Vardenis       Pavardenis      7.76
 ```
+## Programos veikimo spartos analizė (benchmark)
+
+Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./main` (Linux aplinkoje) pridedant vėliavą `-bench` ir skaičių tarp `1 ir 5`.
+> 1 - 1000 įrašų, 2 - 10000 įrašų, 3 - 100000 įrašų, 4 - 1000000 įrašų, 5 - 10000000 įrašų
+```
+./main -bench [1-5]
+```
+Testavimo atvejai. Laikas pateiktas sekundėmis.
+
+| Laikas \ Įrašų sk. | 1000 | 10000 | 100000 | 1000000 | 10000000 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Analizės laikas | 0.01698 | 0.08337 | 0.76175 | 8.22078 | 95.2961 |
+
 ## Įdiegimo instrukcija
 
 1. Iš [Releases](https://github.com/metroff/VU_OP_uzd2/releases) aplanko parsisiųskite vieną iš programos versijų ir ją išsiarchyvuokite.
@@ -74,6 +87,11 @@ Vardenis       Pavardenis      7.76
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v0.4](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.4) - Šioje versijoje pridėta programos spartos analizė, kuri susideda iš:
+    - Įrašų failo kūrimo;
+    - Duomenų iš failo nuskaitymo;
+    - Studentų rūšiavimo ir paskirstymo į dvi grupes pagal vidurkį;
+    - Surūšiuotų studentų išvedimo į du skirtingus failus;
 - [v0.3](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.3) - Šioje versijoje `main.cpp` buvęs kodas išskirstytas į failus, kurie yra `include` aplanke. Taip pat, realizuotas `Išimčių` (`Exception`) valdymas ir pagerintas atsitiktinių skaičių generavimas.
 - [v0.2](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.2) - Šioje versijoje realizuotas studentų informacijos nuskaitymas iš failo `kursiokai.txt`. Failo `kursiokai.txt` struktūra turėtų būti:
     > Studento vardas (tarpas) Studento pavardė (tarpas) N pažymių atskirtų tarpais (tarpas) Egzamino pažymys
