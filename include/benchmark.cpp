@@ -9,6 +9,10 @@ void runBenchmark(int stage) {
 
     vector<Student> benchStudents;
 
+    if(std::system("mkdir benchmark") == 0) {
+        cout << "Created benchmark folder." << endl;
+    }
+
     cout << "Entering benchmark mode." << endl;
 
     for(int i = 0; i < stage; i++) {
