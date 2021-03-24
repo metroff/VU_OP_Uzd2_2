@@ -11,4 +11,4 @@
 #include "utils.hpp"
 
 template <class Container>
-void runBenchmark(int);
+void runBenchmark(int, string);

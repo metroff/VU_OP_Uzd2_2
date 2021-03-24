@@ -1,7 +1,7 @@
 #include "benchmark.hpp"
 
 template <class Container>
-void runBenchmark(int stage) {
+void runBenchmark(int stage, string containerCode) {
     Timer timer;
     double totalTime = 0;
     double partTime;
@@ -14,7 +14,7 @@ void runBenchmark(int stage) {
         cout << "Created benchmark folder." << endl;
     }
 
-    cout << "Entering benchmark mode." << endl;
+    cout << "Entering benchmark mode. Using " << containerCode << "." << endl;
 
     for(int i = 0; i < stage; i++) {
         cout << endl << "Pradedamas " << stages[i] << " irasu testas." << endl;
@@ -72,6 +72,6 @@ void runBenchmark(int stage) {
     cout << endl << "Benchmark ended." << endl;
 }
 
-template void runBenchmark<vector<Student>>(int stage);
-template void runBenchmark<list<Student>>(int stage);
-template void runBenchmark<deque<Student>>(int stage);
+template void runBenchmark<vector<Student>>(int stage, string containerCode);
+template void runBenchmark<list<Student>>(int stage, string containerCode);
+template void runBenchmark<deque<Student>>(int stage, string containerCode);
