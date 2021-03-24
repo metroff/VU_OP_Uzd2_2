@@ -51,3 +51,4 @@ void printResults(Container &students,  OutputType type, bool useFile, string fi
 
 template void printResults(vector<Student> &students,  OutputType type, bool useFile, string fileName, bool log);
 template void printResults(list<Student> &students,  OutputType type, bool useFile, string fileName, bool log);
+template void printResults(deque<Student> &students,  OutputType type, bool useFile, string fileName, bool log);

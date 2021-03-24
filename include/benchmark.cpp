@@ -74,3 +74,4 @@ void runBenchmark(int stage) {
 
 template void runBenchmark<vector<Student>>(int stage);
 template void runBenchmark<list<Student>>(int stage);
+template void runBenchmark<deque<Student>>(int stage);

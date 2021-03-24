@@ -61,6 +61,7 @@ void readFromFile(string fileName, Container &students){
 
 template void readFromFile(string fileName, vector<Student> &students);
 template void readFromFile(string fileName, list<Student> &students);
+template void readFromFile(string fileName, deque<Student> &students);
 
 // Sukuriamas failas su studentų info
 void generateFile(string fileName, int index) {

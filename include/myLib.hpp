@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <list>
+#include <deque>
 
 using std::cout;
 using std::cin;
@@ -14,6 +15,7 @@ using std::setw;
 using std::string;
 using std::vector;
 using std::list;
+using std::deque;
 using std::ifstream;
 using std::ofstream;
 using std::left;
