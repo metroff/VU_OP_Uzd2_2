@@ -1,6 +1,6 @@
 #include "file.hpp"
 
-bool checkIfFileExists(string& fileName){
+bool checkIfFileExists(const string& fileName){
     struct stat buffer;
     return (stat(fileName.c_str(), &buffer)==0);
 }

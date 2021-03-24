@@ -12,6 +12,8 @@
 class GradeException{};
 class FileNotFound{};
 
+bool checkIfFileExists(const string&);
+
 template <class Container>
 void readFromFile(string, Container &);
 void generateFile(string, int);

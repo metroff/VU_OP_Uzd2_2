@@ -10,22 +10,26 @@ void runBenchmark(int stage, string containerCode) {
 
     Container benchStudents;
 
-    if(std::system("mkdir benchmark") == 0) {
-        cout << "Created benchmark folder." << endl;
+    if (!checkIfFileExists("benchmark")) {
+        if(std::system("mkdir benchmark") == 0) {
+            cout << "Created benchmark folder." << endl;
+        }
     }
 
     cout << "Entering benchmark mode. Using " << containerCode << "." << endl;
 
     for(int i = 0; i < stage; i++) {
-        cout << endl << "Pradedamas " << stages[i] << " irasu testas." << endl;
+        cout << endl << "Pradedamas " << stages[i] << " irasu " << containerCode << " testas." << endl;
 
         timer.reset();
 
-        generateFile("benchmark/bench_data"+std::to_string(stages[i])+".txt", stages[i]);
+        if (!checkIfFileExists("benchmark/bench_data"+std::to_string(stages[i])+".txt")){
+            generateFile("benchmark/bench_data"+std::to_string(stages[i])+".txt", stages[i]);
 
-        partTime = timer.elapsed();
-        totalTime += partTime;
-        cout << stages[i] << " irasu failo generavimas uztruko: " << partTime << endl;
+            partTime = timer.elapsed();
+            totalTime += partTime;
+            cout << stages[i] << " irasu failo generavimas uztruko: " << partTime << endl;
+        }
         timer.reset();
 
         readFromFile("benchmark/bench_data"+std::to_string(stages[i])+".txt", benchStudents);
