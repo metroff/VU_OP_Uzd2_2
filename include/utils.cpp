@@ -16,10 +16,18 @@ void sortContainer(vector<Student> &students){
     std::sort(students.begin(), students.end());
 }
 
+void sortContainer(deque<Student> &students){
+    std::sort(students.begin(), students.end());
+}
+
 void sortContainerByName(list<Student> &students){
     students.sort(compareStudents);
 }
 
 void sortContainerByName(vector<Student> &students){
+    std::sort(students.begin(), students.end(), compareStudents);
+}
+
+void sortContainerByName(deque<Student> &students){
     std::sort(students.begin(), students.end(), compareStudents);
 }
