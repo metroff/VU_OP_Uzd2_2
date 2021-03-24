@@ -12,5 +12,6 @@
 class GradeException{};
 class FileNotFound{};
 
-void readFromFile(string, vector<Student> &);
+template <class Container>
+void readFromFile(string, Container &);
 void generateFile(string, int);

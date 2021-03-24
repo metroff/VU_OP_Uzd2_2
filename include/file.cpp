@@ -6,7 +6,8 @@ bool checkIfFileExists(string& fileName){
 }
 
 // Duomenų įvedimas nuskaitant iš failo
-void readFromFile(string fileName, vector<Student> &students){
+template <class Container>
+void readFromFile(string fileName, Container &students){
     if(checkIfFileExists(fileName)) {
         std::stringstream ss;
         // Nuskaitomas visas failas
@@ -57,6 +58,9 @@ void readFromFile(string fileName, vector<Student> &students){
         throw FileNotFound();
     }
 }
+
+template void readFromFile(string fileName, vector<Student> &students);
+template void readFromFile(string fileName, list<Student> &students);
 
 // Sukuriamas failas su studentų info
 void generateFile(string fileName, int index) {

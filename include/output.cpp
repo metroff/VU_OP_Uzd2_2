@@ -1,12 +1,9 @@
 #include "output.hpp"
 
-bool compareStudents(Student a, Student b) {
-    return (a.lastName == b.lastName) ? a.firstName < b.firstName : a.lastName < b.lastName;
-}
-
 // Atspausdinama studento info
-void printResults(vector<Student> &students,  OutputType type, bool useFile, string fileName, bool log) {
-    sort(students.begin(), students.end(), compareStudents);
+template <class Container>
+void printResults(Container &students,  OutputType type, bool useFile, string fileName, bool log) {
+    sortContainerByName(students);
 
     int length = 52;
 
@@ -51,3 +48,6 @@ void printResults(vector<Student> &students,  OutputType type, bool useFile, str
         cout << endl << outputLine.str();
     }
 }
+
+template void printResults(vector<Student> &students,  OutputType type, bool useFile, string fileName, bool log);
+template void printResults(list<Student> &students,  OutputType type, bool useFile, string fileName, bool log);

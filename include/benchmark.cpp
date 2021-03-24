@@ -1,5 +1,6 @@
 #include "benchmark.hpp"
 
+template <class Container>
 void runBenchmark(int stage) {
     Timer timer;
     double totalTime = 0;
@@ -7,7 +8,7 @@ void runBenchmark(int stage) {
 
     int stages[5] {1000,10000,100000,1000000,10000000};
 
-    vector<Student> benchStudents;
+    Container benchStudents;
 
     if(std::system("mkdir benchmark") == 0) {
         cout << "Created benchmark folder." << endl;
@@ -16,8 +17,6 @@ void runBenchmark(int stage) {
     cout << "Entering benchmark mode." << endl;
 
     for(int i = 0; i < stage; i++) {
-        benchStudents.reserve(stages[i]);
-
         cout << endl << "Pradedamas " << stages[i] << " irasu testas." << endl;
 
         timer.reset();
@@ -36,15 +35,14 @@ void runBenchmark(int stage) {
         cout << stages[i] << " irasu nuskaitymas is failo uztruko: " << partTime << endl;
         timer.reset();
 
-        sort(benchStudents.begin(), benchStudents.end(), 
-            [](const Student &l, const Student &r) {return l.finalMeanGrade < r.finalMeanGrade;});
+        sortContainer(benchStudents);
 
-        vector<Student>::iterator it = std::find_if(benchStudents.begin(), benchStudents.end(), 
+        typename Container::iterator it = std::find_if(benchStudents.begin(), benchStudents.end(), 
                                                 [](const Student &s) {return s.finalMeanGrade >= splitLimit;});
 
-        vector<Student> coolStudents(it, benchStudents.end());
+        Container coolStudents(it, benchStudents.end());
         benchStudents.erase(it, benchStudents.end());
-        benchStudents.shrink_to_fit();
+        benchStudents.resize(benchStudents.size());
 
         partTime = timer.elapsed();
         totalTime += partTime;
@@ -73,3 +71,6 @@ void runBenchmark(int stage) {
 
     cout << endl << "Benchmark ended." << endl;
 }
+
+template void runBenchmark<vector<Student>>(int stage);
+template void runBenchmark<list<Student>>(int stage);

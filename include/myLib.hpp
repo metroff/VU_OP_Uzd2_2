@@ -5,6 +5,7 @@
 #include <iomanip> 
 #include <fstream>
 #include <string>
+#include <list>
 
 using std::cout;
 using std::cin;
@@ -12,6 +13,7 @@ using std::endl;
 using std::setw;
 using std::string;
 using std::vector;
+using std::list;
 using std::ifstream;
 using std::ofstream;
 using std::left;
