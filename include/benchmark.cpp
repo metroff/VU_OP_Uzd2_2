@@ -41,6 +41,11 @@ void runBenchmark(int stage, string containerCode) {
 
         sortContainer(benchStudents);
 
+        partTime = timer.elapsed();
+        totalTime += partTime;
+        cout << stages[i] << " irasu rusiavimas uztruko: " << partTime << endl;
+        timer.reset();
+
         typename Container::iterator it = std::find_if(benchStudents.begin(), benchStudents.end(), 
                                                 [](const Student &s) {return s.finalMeanGrade >= splitLimit;});
 
