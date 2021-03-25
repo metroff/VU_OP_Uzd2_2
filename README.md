@@ -63,18 +63,40 @@ Vardas         Pavarde         Galutinis (Vid.)
 --------------------------------------------------
 Vardenis       Pavardenis      7.76
 ```
-## Programos veikimo spartos analizė (benchmark)
+## Spartos analizė (benchmark)
 
-Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./main` (Linux aplinkoje) pridedant vėliavą `-bench` ir skaičių tarp `1 ir 5`.
-> 1 - 1000 įrašų, 2 - 10000 įrašų, 3 - 100000 įrašų, 4 - 1000000 įrašų, 5 - 10000000 įrašų
+Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./main` (Linux aplinkoje) pridedant vėliavą `-bench`, etapo skaičių tarp `1 ir 5` ir duomenų konteinerio tipo skaičių tarp `0 ir 2`.
+> Pirmas skaicius (etapas): \
+> 1 - 1000 įrašų, 2 - 10000 įrašų, 3 - 100000 įrašų, 4 - 1000000 įrašų, 5 - 10000000 įrašų \
+> Antras skaicius (duomenų konteinerio tipas): \
+> 0 - Vector, 1 - Deque, 2 - List
 ```
-./main -bench [1-5]
+./main -bench [1-5] [0-2]
 ```
+
+Testavimo sistema:
+- CPU - AMD Ryzen 1700x 3.4 Ghz
+- RAM - 16GB 2400 Mhz
+- SSD - 1TB SATA mode
+
 Testavimo atvejai. Laikas pateiktas sekundėmis.
 
-| Laikas \ Įrašų sk. | 1000 | 10000 | 100000 | 1000000 | 10000000 |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| Analizės laikas | 0.01698 | 0.08337 | 0.76175 | 8.22078 | 95.2961 |
+|                              | 1000     | 10000   | 100000  | 1000000 | 10000000 |
+| :---:                        | :---:    | :---:   | :---:   | :---:   | :---:    |
+| **Vector <br/> nuskaitymas** | 0.00548  | 0.03766 | 0.34299 | 3.38359 | 35.2422  |
+| **Vector <br/> rūšiavimas**  | 0.00012  | 0.00141 | 0.01709 | 0.2188  | 2.89106  |
+| **Vector <br/> skirstymas**  | 0.000036 | 0.00037 | 0.00693 | 0.12256 | 1.69828  |
+| **Vector <br/> iš viso**     | 0.005636 | 0.03944 | 0.36701 | 3.72495 | 39.83154 |
+| | | | | | |
+| **Deque <br/> nuskaitymas**  | 0.00566  | 0.03823 | 0.34723 | 3.47963 | 35.052   |
+| **Deque <br/> rūšiavimas**   | 0.00016  | 0.00198 | 0.02271 | 0.30543 | 3.92397  |
+| **Deque <br/> skirstymas**   | 0.000056 | 0.00057 | 0.01297 | 0.177   | 2.82585  |
+| **Deque <br/> iš viso**      | 0.005876 | 0.04078 | 0.38291 | 3.96206 | 41.80182 |
+| | | | | | |
+| **List<br/> nuskaitymas**    | 0.00533  | 0.03677 | 0.33925 | 3.37886 | 34.5023  |
+| **List <br/> rūšiavimas**    | 0.000081 | 0.00128 | 0.03005 | 0.64562 | 11.9655  |
+| **List <br/> skirstymas**    | 0.00009  | 0.0008  | 0.02499 | 0.30177 | 4.2005   |
+| **List <br/> iš viso**       | 0.005501 | 0.03885 | 0.39429 | 4.32625 | 50.6683  |
 
 ## Įdiegimo instrukcija
 
@@ -87,6 +109,7 @@ Testavimo atvejai. Laikas pateiktas sekundėmis.
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v0.5](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.5) - Šioje versijoje patobulinta [spartos analizė](#spartos-analizė-benchmark). Pridėtas duomenų konteinerio (`Vector`, `Deque`, `List`) pasirinkimas.
 - [v0.4](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.4) - Šioje versijoje pridėta programos spartos analizė, kuri susideda iš:
     - Įrašų failo kūrimo;
     - Duomenų iš failo nuskaitymo;
