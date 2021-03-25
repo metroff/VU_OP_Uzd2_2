@@ -3,9 +3,11 @@
 #include "myLib.hpp"
 #include "struct.hpp"
 #include "console.hpp"
+#include "utils.hpp"
 #include <algorithm>
 #include <sstream>
 
 using std::fixed;
 
-void printResults(vector<Student> &,  OutputType, bool useFile=false, string filename="rezultatai.txt", bool log = true);
+template <class Container>
+void printResults(Container &,  OutputType, bool useFile=false, string filename="rezultatai.txt", bool log = true);

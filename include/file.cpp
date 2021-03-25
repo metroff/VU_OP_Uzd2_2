@@ -1,62 +1,63 @@
 #include "file.hpp"
 
-bool checkIfFileExists(string& fileName){
+bool checkIfFileExists(const string& fileName){
     struct stat buffer;
     return (stat(fileName.c_str(), &buffer)==0);
 }
 
 // Duomenų įvedimas nuskaitant iš failo
-void readFromFile(string fileName, vector<Student> &students){
-    if(checkIfFileExists(fileName)) {
-        std::stringstream ss;
-        // Nuskaitomas visas failas
-        ifstream file(fileName);
-        if (file.is_open()) {
-            ss << file.rdbuf();
-            file.close();
+template <class Container>
+void readFromFile(string fileName, Container &students){
+    std::stringstream ss;
+    // Nuskaitomas visas failas
+    ifstream file(fileName);
+    if (file) {
+        ss << file.rdbuf();
+        file.close();
 
-            string line;
-            getline(ss, line);
+        string line;
+        getline(ss, line);
 
-            int lineNum = 1;
-            // Dalinama eilutėmis
-            while(getline(ss, line)) {
-                Student student;
+        int lineNum = 1;
+        // Dalinama eilutėmis
+        while(getline(ss, line)) {
+            Student student;
 
-                std::stringstream line_stream(line);
-                line_stream >> student.firstName;
-                line_stream >> student.lastName;
+            std::stringstream line_stream(line);
+            line_stream >> student.firstName;
+            line_stream >> student.lastName;
 
-                int grade;
+            int grade;
 
-                try{                
-                    while(line_stream >> grade || !line_stream.eof()) {
-                        if(line_stream.fail() || !isValidGrade(grade)){
-                            throw GradeException();
-                        }
-                        student.grades.push_back(grade);
+            try{                
+                while(line_stream >> grade || !line_stream.eof()) {
+                    if(line_stream.fail() || !isValidGrade(grade)){
+                        throw GradeException();
                     }
-                } catch (GradeException) {
-                    cout << "Nuskaitymo klaida " << lineNum << " eileje. Studentas praleistas.\n";
-                    student.grades.clear();
-                    lineNum++;
-                    continue;
+                    student.grades.push_back(grade);
                 }
-
-                student.examGrade = student.grades.back();
-                student.grades.pop_back();
-
-                processGrades(student);
-
-                students.push_back(student);
-
+            } catch (GradeException) {
+                cout << "Nuskaitymo klaida " << lineNum << " eileje. Studentas praleistas.\n";
+                student.grades.clear();
                 lineNum++;
+                continue;
             }
-        } else throw std::runtime_error("Failo neimanoma atidaryti.");
-    } else {
-        throw FileNotFound();
-    }
+
+            student.examGrade = student.grades.back();
+            student.grades.pop_back();
+
+            processGrades(student);
+
+            students.push_back(student);
+
+            lineNum++;
+        }
+    } else throw std::runtime_error("Failo neimanoma atidaryti.");
 }
+
+template void readFromFile(string fileName, vector<Student> &students);
+template void readFromFile(string fileName, list<Student> &students);
+template void readFromFile(string fileName, deque<Student> &students);
 
 // Sukuriamas failas su studentų info
 void generateFile(string fileName, int index) {

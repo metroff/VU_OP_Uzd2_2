@@ -11,14 +11,23 @@
 int main(int argc, char* argv[]) {
     if(argc>=2) {
         if(string(argv[1]) == "-bench") {    
-            if(argc < 3) {
-                cout << "Usage: " << argv[0] << "-bench (stage [1-5])" << endl;
+            if(argc < 4) {
+                cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2])" << endl;
                 return 0;
             }        
             int stage = atoi(argv[2]);
-            if (stage > 0 && stage < 6)
-                runBenchmark(stage);
-            else cout << "Usage: " << argv[0] << "-bench (stage [1-5])" << endl;
+            if (stage > 0 && stage < 6) {
+                int type = atoi(argv[3]);
+                switch(type) {
+                    case 0: runBenchmark<vector<Student>>(stage, "Vector"); break;
+                    case 1: runBenchmark<deque<Student>>(stage, "Deque"); break;
+                    case 2: runBenchmark<list<Student>>(stage, "List"); break;
+                    default: cout << "Type: 0-Vector, 1-Deque, 2-List" << endl;
+                }
+                
+            }
+                
+            else cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2])" << endl;
             return 0;
         }
     }
