@@ -58,11 +58,11 @@ void runBenchmark(int stage, string containerCode, int strategyType) {
                                                 [](const Student &s) {return s.finalMeanGrade >= splitLimit;});
 
         switch(strategyType) {
-            case 0: 
+            case 1: 
                 coolStudents.assign(it, benchStudents.end());
                 badStudents.assign(benchStudents.begin(), it);
                 break;
-            case 1:
+            case 2:
                 while(it != benchStudents.end()) {
                     coolStudents.push_back(*it);
                     it = benchStudents.erase(it);
@@ -70,7 +70,7 @@ void runBenchmark(int stage, string containerCode, int strategyType) {
                 benchStudents.resize(benchStudents.size());
                 _badStudents = &benchStudents;
                 break;
-            case 2: 
+            case 3: 
                 coolStudents.assign(it, benchStudents.end());
                 benchStudents.erase(it, benchStudents.end());
                 benchStudents.resize(benchStudents.size());
@@ -99,6 +99,8 @@ void runBenchmark(int stage, string containerCode, int strategyType) {
         cout << stages[i] << " irasu testo visas laikas: " << totalTime << endl;
 
         benchStudents.clear();
+        coolStudents.clear();
+        badStudents.clear();
 
         totalTime = 0;
     }

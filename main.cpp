@@ -12,12 +12,12 @@ int main(int argc, char* argv[]) {
     if(argc>=2) {
         if(string(argv[1]) == "-bench") {    
             if(argc < 5) {
-                cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [0-2])" << endl;
+                cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [1-3])" << endl;
                 return 0;
             }        
             int stage = atoi(argv[2]);
             int strategy = atoi(argv[4]);
-            if (stage >= 1 && stage <= 5 && strategy >= 0 && strategy <= 2 ) {
+            if (stage >= 1 && stage <= 5 && strategy >= 1 && strategy <= 3 ) {
                 int type = atoi(argv[3]);
                 switch(type) {
                     case 0: runBenchmark<vector<Student>>(stage, "VECTOR", strategy); break;
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
                     default: cout << "Type: 0-Vector, 1-Deque, 2-List" << endl;
                 }
             }
-            else cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [0-2])" << endl;
+            else cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [1-3])" << endl;
             return 0;
         }
     }
