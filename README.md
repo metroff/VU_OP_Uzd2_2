@@ -73,7 +73,7 @@ Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./m
 > Trečias skaicius (duomenų konteinerio skirstymo strategija) \
 > Strategijas žiūrėti [čia](#konteinerio-skirstymo-spartos-analizė).
 ```
-./main -bench [1-5] [0-2] [1-3]
+./main -bench [1-5] [0-2] [1-4]
 ```
 
 Testavimo sistema:
