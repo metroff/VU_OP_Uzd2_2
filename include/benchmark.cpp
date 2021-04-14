@@ -76,6 +76,15 @@ void runBenchmark(int stage, string containerCode, int strategyType) {
                 benchStudents.resize(benchStudents.size());
                 _badStudents = &benchStudents;
                 break;
+            case 4:
+                if (containerCode != "VECTOR") {
+                    cout << "Naudokite Vector klasę." << endl;
+                    exit(1);
+                }
+                std::copy(it, benchStudents.end(), std::back_inserter(coolStudents));
+                benchStudents.erase(it, benchStudents.end());
+                benchStudents.resize(benchStudents.size());
+                _badStudents = &benchStudents;
         }
 
         partTime = timer.elapsed();

@@ -130,8 +130,8 @@ Studentų įrašai skirstomi panaudojant vieną naują to paties tipo konteiner�
 
 Trečia strategija yra labiau optimizuota laiko ir atminties atžvilgiu nei pirma ar antra, todėl labiausiai tinka darbui su dideliais duomenų kiekiais.
 
-### Vektoriaus optimizacija
-Buvo bandoma `Vector` klasę optimizuoti pasinaudojant `std::copy()` metodu nesėkmingai. Šios implementacijos vykdymo laikas yra ilgesnis nei prieš tai naudojamos. Optimizuoti labiau nepavyko, nes jau 3 strategijoje yra naudojamas `find_if()` metodas, kurio pagalba randamas atskirimo taškas.
+### Vektoriaus optimizacija (4 strategija)
+Buvo bandoma `Vector` klasę optimizuoti pasinaudojant `std::copy()` metodu nesėkmingai. Šios implementacijos vykdymo laikas yra ilgesnis nei prieš tai naudojamos. Optimizuoti labiau nepavyko, nes jau 3 strategijoje yra naudojamas `find_if()` metodas, kurio pagalba randamas atskirimo taškas. 3 strategijoje naudojamas būdas yra labiausiai optimizuotas iš kitų bandytų strategijų.
 
 ## Įdiegimo instrukcija
 
