@@ -69,9 +69,11 @@ Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./m
 > Pirmas skaicius (etapas): \
 > 1 - 1000 įrašų, 2 - 10000 įrašų, 3 - 100000 įrašų, 4 - 1000000 įrašų, 5 - 10000000 įrašų \
 > Antras skaicius (duomenų konteinerio tipas): \
-> 0 - Vector, 1 - Deque, 2 - List
+> 0 - Vector, 1 - Deque, 2 - List \
+> Trečias skaicius (duomenų konteinerio skirstymo strategija) \
+> Strategijas žiūrėti [čia](#konteinerio-skirstymo-spartos-analizė).
 ```
-./main -bench [1-5] [0-2]
+./main -bench [1-5] [0-2] [1-3]
 ```
 
 Testavimo sistema:
@@ -98,6 +100,39 @@ Testavimo atvejai. Laikas pateiktas sekundėmis.
 | **List <br/> skirstymas**    | 0.00009  | 0.0008  | 0.02499 | 0.30177 | 4.2005   |
 | **List <br/> iš viso**       | 0.005501 | 0.03885 | 0.39429 | 4.32625 | 50.6683  |
 
+## Konteinerio skirstymo spartos analizė
+
+### Konteinerio skirstymas yra vykdomas pasinaudojant 3 skirtingas strategijas (visose strategijose naudojamas `std::find_if()` metodas):
+
+### 1 strategija:
+Studentų įrašai skirstomi į du naujus to paties tipo konteinerius. Greičiausiai veikia naudojant `Vector` tipo konteinerį. Prie 10000000 įrašų atminties sunaudojimas 600 MB didesnis nei naudojant 3 strategiją.
+|            | 1000     | 10000   | 100000  | 1000000 | 10000000 |
+| :---:      | :---:    | :---:   | :---:   | :---:   | :---:    |
+| **Vector** | 0.000056 | 0.00046 | 0.00904 | 0.15298 | 2.11046  |
+| **Deque**  | 0.000085 | 0.00098 | 0.01829 | 0.20807 | 3.01634  |
+| **List**   | 0.00011  | 0.0013  | 0.02878 | 0.3202  | 4.38611  |
+
+### 2 strategija:
+Studentų įrašai skirstomi panaudojant vieną naują to paties tipo konteinerį, o perkelti įrašai yra ištrinami **po vieną** iš pradinio konteinerio. Greičiausiai veikia naudojant `List` tipo konteinerį. Naudojant `Vector` ar `Deque` tipo konteinerius skirstymas nuo 1000000 įrašų užtrunka daugiau nei 10 min.
+|            | 1000     | 10000   | 100000  | 1000000 | 10000000 |
+| :---:      | :---:    | :---:   | :---:   | :---:   | :---:    |
+| **Vector** | 0.001709 | 0.13318 | 13.0799 |    -    |    -     |
+| **Deque**  | 0.00208  | 0.18571 | 18.2525 |    -    |    -     |
+| **List**   | 0.000039 | 0.00039 | 0.01402 | 0.14046 | 1.99394  |
+
+### 3 strategija:
+Studentų įrašai skirstomi panaudojant vieną naują to paties tipo konteinerį, o perkelti įrašai yra ištrinami **vienu kartu** iš pradinio konteinerio. Greičiausiai veikia naudojant `Vector` tipo konteinerį.
+|            | 1000     | 10000   | 100000  | 1000000 | 10000000 |
+| :---:      | :---:    | :---:   | :---:   | :---:   | :---:    |
+| **Vector** | 0.000036 | 0.00043 | 0.00937 | 0.13769 | 1.77564  |
+| **Deque**  | 0.000058 | 0.00067 | 0.01576 | 0.16829 | 2.6044   |
+| **List**   | 0.000082 | 0.00089 | 0.02602 | 0.31854 | 4.18603  |
+
+Trečia strategija yra labiau optimizuota laiko ir atminties atžvilgiu nei pirma ar antra, todėl labiausiai tinka darbui su dideliais duomenų kiekiais.
+
+### Vektoriaus optimizacija
+Buvo bandoma `Vector` klasę optimizuoti pasinaudojant `std::copy()` metodu nesėkmingai. Šios implementacijos vykdymo laikas yra ilgesnis nei prieš tai naudojamos. Optimizuoti labiau nepavyko, nes jau 3 strategijoje yra naudojamas `find_if()` metodas, kurio pagalba randamas atskirimo taškas.
+
 ## Įdiegimo instrukcija
 
 1. Iš [Releases](https://github.com/metroff/VU_OP_uzd2/releases) aplanko parsisiųskite vieną iš programos versijų ir ją išsiarchyvuokite.
@@ -106,9 +141,14 @@ Testavimo atvejai. Laikas pateiktas sekundėmis.
     ```
     g++ -std=c++11 include/*.cpp main.cpp -o main && ./main
     ```
+    - Naudojant makefile (Linux aplinkoje):
+    ```
+    make && ./main
+    ```
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v1.0](https://github.com/metroff/VU_OP_uzd2/releases/tag/v1.0) - Šioje versijoje pridėta [konteinerio skirstymo spartos analizė](#konteinerio-skirstymo-spartos-analizė). Pridėtas skirstymo strategijos pasirinkimas.
 - [v0.5](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.5) - Šioje versijoje patobulinta [spartos analizė](#spartos-analizė-benchmark). Pridėtas duomenų konteinerio (`Vector`, `Deque`, `List`) pasirinkimas.
 - [v0.4](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.4) - Šioje versijoje pridėta programos spartos analizė, kuri susideda iš:
     - Įrašų failo kūrimo;
