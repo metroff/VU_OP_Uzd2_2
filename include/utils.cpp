@@ -1,11 +1,7 @@
 #include "utils.hpp"
 
-bool compareStudents(Student a, Student b) {
-    return (a.lastName == b.lastName) ? a.firstName < b.firstName : a.lastName < b.lastName;
-}
-
-bool isValidGrade(int grade){
-    return (grade >= GRADE_MIN && grade <= GRADE_MAX);
+bool compareStudents(Student &a, Student &b) {
+    return a.compareByFullName(b);
 }
 
 void sortContainer(list<Student> &students){

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "myLib.hpp"
-#include "struct.hpp"
+#include "student.hpp"
 #include "console.hpp"
 #include "utils.hpp"
 #include <algorithm>

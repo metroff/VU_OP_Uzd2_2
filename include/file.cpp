@@ -24,29 +24,15 @@ void readFromFile(string fileName, Container &students){
             Student student;
 
             std::stringstream line_stream(line);
-            line_stream >> student.firstName;
-            line_stream >> student.lastName;
 
-            int grade;
-
-            try{                
-                while(line_stream >> grade || !line_stream.eof()) {
-                    if(line_stream.fail() || !isValidGrade(grade)){
-                        throw GradeException();
-                    }
-                    student.grades.push_back(grade);
-                }
+            try{   
+                student.readStudent(line_stream);
             } catch (GradeException) {
                 cout << "Nuskaitymo klaida " << lineNum << " eileje. Studentas praleistas.\n";
-                student.grades.clear();
+                student.clearGrades();
                 lineNum++;
                 continue;
             }
-
-            student.examGrade = student.grades.back();
-            student.grades.pop_back();
-
-            processGrades(student);
 
             students.push_back(student);
 

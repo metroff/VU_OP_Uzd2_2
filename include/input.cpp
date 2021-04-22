@@ -1,23 +1,5 @@
 #include "input.hpp"
 
-// Sugeneruojami pažymiai
-void generateGrades(Student &student, int numOfGrades) {
-    RandInt rnd{1, 10};
-    // Nustatomas pažymių kiekis
-    if (numOfGrades == -1) {
-        numOfGrades = rnd();
-    }
-    // Sugeneruojami ir išspausdinami pažymaiai
-    cout << "Sugeneruoti " << numOfGrades << " pazymiai: ";
-    for (int i = 0; i < numOfGrades; i++) {
-        int grade = rnd();
-        student.grades.push_back(grade);
-        cout << grade << " ";
-    }
-    student.examGrade = rnd();
-    cout << "\nSugeneruotas galutinis pazymys: " << student.examGrade << endl;
-}
-
 // Pažymių įvedimas rankiniu budu
 void inputGrades(Student &student, int numOfGrades) {
     // Nustatoma ar žinomas pažymių kiekis
@@ -30,30 +12,32 @@ void inputGrades(Student &student, int numOfGrades) {
             int grade = getGrade(true);
             if (grade == -1)
                 break;
-            student.grades.push_back(grade);
+            student.addGrade(grade);
             numOfGrades++;
         }
     } else {
         //Pateikiama užklausa pažymių įvedimui.
         for (int i = 0; i < numOfGrades; i++) {
             cout << "Iveskite " << i + 1 << " pazymi: ";
-            student.grades.push_back(getGrade());
+            student.addGrade(getGrade());
         }
     }
     cout << "Iveskite egzamino pazymi: ";
-    student.examGrade = getGrade();
+    student.setExamGrade(getGrade());
 }
 
 // Duomenų įvedimas rankiniu būdu
 void manualInput(vector<Student> &students) {
     while (true) {
-        Student student;
+        string firstName, lastName;
 
         cout << "Iveskite studento varda: ";
-        getline(cin, student.firstName);
+        getline(cin, firstName);
 
         cout << "Iveskite studento pavarde: ";
-        getline(cin, student.lastName);
+        getline(cin, lastName);
+
+        Student student(firstName, lastName);
         
         int numOfGrades = -1;
         if (yesNoQuestion("Ar zinote pazymiu kieki?"))
@@ -61,15 +45,15 @@ void manualInput(vector<Student> &students) {
 
         if (numOfGrades != 0) {
             if (yesNoQuestion("Ar norite atsitiktinai sugeneruoti pazymius?"))
-                generateGrades(student, numOfGrades);
+                student.generateGrades(numOfGrades);
             else
                 inputGrades(student, numOfGrades);
         } else {
             cout << "Iveskite egzamino pazymi: ";
-            student.examGrade = getGrade();
+            student.setExamGrade(getGrade());
         }
 
-        processGrades(student);
+        student.processGrades();
 
         students.push_back(student);
 
