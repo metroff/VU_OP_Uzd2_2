@@ -79,7 +79,7 @@ Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./m
 Testavimo sistema:
 - CPU - AMD Ryzen 1700x 3.4 Ghz
 - RAM - 16GB 2400 Mhz
-- SSD - 1TB SATA mode
+- SSD - 1TB SATA
 
 Testavimo atvejai. Laikas pateiktas sekundėmis.
 
@@ -133,6 +133,39 @@ Trečia strategija yra labiau optimizuota laiko ir atminties atžvilgiu nei pirm
 ### Vektoriaus optimizacija (4 strategija)
 Buvo bandoma `Vector` klasę optimizuoti pasinaudojant `std::copy()` metodu nesėkmingai. Šios implementacijos vykdymo laikas yra ilgesnis nei prieš tai naudojamos. Optimizuoti labiau nepavyko, nes jau 3 strategijoje yra naudojamas `find_if()` metodas, kurio pagalba randamas atskirimo taškas. 3 strategijoje naudojamas būdas yra labiausiai optimizuotas iš kitų bandytų strategijų.
 
+## Spartos analizė tarp struktūros ir klasės
+
+Nuo [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1). Spartos analizė tarp struktūros ir klasės naudoja `Vector` tipo konteinerį ir [3 strategiją](#3-strategija).
+
+| Optimizacija    | Struktūra |         | Klasė   |         | 
+| :---            | :---:     | :---:   | :---:   | :---:   |
+|                 | 100000    | 1000000 | 100000  | 1000000 |
+| **O1**          |           |         |         |         |
+| **Nuskaitymas** | 0.3585    | 3.47208 | 0.34901 | 3.39736 |
+| **Skirstymas**  | 0.02498   | 0.34083 | 0.02763 | 0.36485 |
+| **Išvedimas**   | 0.15058   | 1.5258  | 0.15434 | 1.56187 |
+| **Iš viso**     | 0.53406   | 5.33871 | 0.53098 | 5.32408 |	
+|                 |           |         |         |         |
+| **O2**          |           |         |         |         |
+| **Nuskaitymas** | 0.35197   | 3.40123 | 0.34419 | 3.39506 |
+| **Skirstymas**  | 0.02561   | 0.35605 | 0.0284  | 0.36742 |
+| **Išvedimas**   | 0.14424   | 1.45616 | 0.14522 | 1.47491 |
+| **Iš viso**     | 0.52182   | 5.21344 | 0.51781 | 5.23739 |
+|                 |           |         |         |         |
+| **O3**          |           |         |         |         |
+| **Nuskaitymas** | 0.35336   | 3.44756 | 0.34633 | 3.3711  |
+| **Skirstymas**  | 0.02633   | 0.35089 | 0.02706 | 0.3656  |
+| **Išvedimas**   | 0.14392   | 1.44935 | 0.14842 | 1.48009 |
+| **Iš viso**     | 0.52361   | 5.2478  | 0.52181 | 5.21679 |
+
+Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su O2 optimizacija greičiausiai veikia naudojant Studento struktūrą. Failo dydis skiriasi tik naudojant O2 optimizaciją. Naudojant kitas optimizacijas failo dydis vienodas.
+
+| Failo dydis | O1    | O2    | O3    | 
+| :---        | :---: | :---: | :---: |
+| Struktūra   | 232KB | 226KB | 248KB |
+| Klasė       | 232KB | 232KB | 248KB |
+
+
 ## Įdiegimo instrukcija
 
 1. Iš [Releases](https://github.com/metroff/VU_OP_uzd2/releases) aplanko parsisiųskite vieną iš programos versijų ir ją išsiarchyvuokite.
@@ -148,6 +181,7 @@ Buvo bandoma `Vector` klasę optimizuoti pasinaudojant `std::copy()` metodu nes�
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1) - Šioje versijoje naudojama Studento klasė vietoj struktūros. Spartos analizę tarp struktūros ir klasės galima rasti [čia](#spartos-analizė-tarp-struktūros-ir-klasės).
 - [v1.0](https://github.com/metroff/VU_OP_uzd2/releases/tag/v1.0) - Šioje versijoje pridėta [konteinerio skirstymo spartos analizė](#konteinerio-skirstymo-spartos-analizė). Pridėtas skirstymo strategijos pasirinkimas.
 - [v0.5](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.5) - Šioje versijoje patobulinta [spartos analizė](#spartos-analizė-benchmark). Pridėtas duomenų konteinerio (`Vector`, `Deque`, `List`) pasirinkimas.
 - [v0.4](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.4) - Šioje versijoje pridėta programos spartos analizė, kuri susideda iš:
