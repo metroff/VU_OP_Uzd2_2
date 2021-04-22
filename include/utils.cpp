@@ -4,10 +4,6 @@ bool compareStudents(Student &a, Student &b) {
     return a.compareByFullName(b);
 }
 
-bool isValidGrade(int grade){
-    return (grade >= GRADE_MIN && grade <= GRADE_MAX);
-}
-
 void sortContainer(list<Student> &students){
     students.sort();
 }

@@ -1,8 +1,5 @@
 #pragma once
 
-#define GRADE_MIN 1
-#define GRADE_MAX 10
-
 #include "myLib.hpp"
 #include "student.hpp"
 #include <algorithm>

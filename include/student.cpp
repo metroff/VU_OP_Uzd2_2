@@ -1,10 +1,16 @@
 #include "student.hpp"
 
+// Konstruktoriai
 Student::Student(const string & firstName, const string & lastName) {
     this->firstName = firstName;
     this->lastName = lastName;
 }
 
+Student::Student(std::stringstream &stream) {
+    readStudent(stream);
+}
+
+// Getter'iai
 string Student::getFirstName() const {
     return firstName;
 }
@@ -25,6 +31,7 @@ double Student::getFinalMedianGrade() const {
     return finalMedianGrade;
 }
 
+// Setter'iai
 void Student::setExamGrade(int examGrade) {
     this->examGrade = examGrade;
 }
@@ -33,6 +40,28 @@ void Student::addGrade(int grade) {
     grades.push_back(grade);
 }
 
+// Student funkcijos
+// Nuskaitymas į klasę
+void Student::readStudent(std::stringstream &stream) {
+    stream >> firstName;
+    stream >> lastName;
+
+    int grade;
+                          
+    while(stream >> grade || !stream.eof()) {
+        if(stream.fail() || !isValidGrade(grade)){
+            throw GradeException();
+        }
+        grades.push_back(grade);
+    }
+
+    examGrade = grades.back();
+    grades.pop_back();
+
+    processGrades();
+}
+
+// Pažymių apdorojimas
 void Student::processGrades() {
     double finalExam = 0.6 * examGrade;
     if (grades.size()==0){
@@ -44,13 +73,9 @@ void Student::processGrades() {
     }
 }
 
+// Pažymių išvalymas
 void Student::clearGrades() {
     grades.clear();
-}
-
-void Student::setExamGradeFromGrades() {
-    examGrade = grades.back();
-    grades.pop_back();
 }
 
 // Sugeneruojami pažymiai
@@ -71,10 +96,16 @@ void Student::generateGrades(int numOfGrades) {
     cout << "\nSugeneruotas galutinis pazymys: " << examGrade << endl;
 }
 
+// Palygynimas
 bool Student::operator < (const Student &student) {
     return finalMeanGrade < student.finalMeanGrade;
 }
 
 bool Student::compareByFullName(const Student &student) {
     return (lastName == student.lastName) ? firstName < student.firstName : lastName < student.lastName;
+}
+
+// Utility funkcija
+bool isValidGrade(int grade){
+    return (grade >= GRADE_MIN && grade <= GRADE_MAX);
 }

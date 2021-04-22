@@ -8,7 +8,6 @@
 #include "rng.hpp"
 #include <sstream>
 
-class GradeException{};
 class FileNotFound{};
 
 bool checkIfFileExists(const string&);
