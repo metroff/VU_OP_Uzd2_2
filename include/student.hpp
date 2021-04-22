@@ -30,4 +30,5 @@ class Student {
         void setExamGradeFromGrades();
 
         bool operator < (const Student &);
+        bool compareByFullName(const Student &);
 };

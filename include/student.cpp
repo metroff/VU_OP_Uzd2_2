@@ -56,3 +56,7 @@ void Student::setExamGradeFromGrades() {
 bool Student::operator < (const Student &student) {
     return finalMeanGrade < student.finalMeanGrade;
 }
+
+bool Student::compareByFullName(const Student &student) {
+    return (lastName == student.lastName) ? firstName < student.firstName : lastName < student.lastName;
+}
