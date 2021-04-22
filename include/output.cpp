@@ -26,15 +26,15 @@ void printResults(Container &students,  OutputType type, bool useFile, string fi
 
     // Išvedama studentų info
     for(auto &student : students){
-        outputLine << setw(16) << student.firstName
-            << setw(16) << student.lastName;
+        outputLine << setw(16) << student.getFirstName()
+            << setw(16) << student.getLastName();
         if (type == OutputType::BOTH) {
-            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
-            outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
+            outputLine << setw(20) << setprecision(2) << student.getFinalMeanGrade();
+            outputLine << setw(20) << setprecision(2) << student.getFinalMedianGrade();
         } else if (type == OutputType::MEAN){
-            outputLine << setw(20) << setprecision(2) << student.finalMeanGrade;
+            outputLine << setw(20) << setprecision(2) << student.getFinalMeanGrade();
         } else {
-            outputLine << setw(20) << setprecision(2) << student.finalMedianGrade;
+            outputLine << setw(20) << setprecision(2) << student.getFinalMedianGrade();
         }     
         outputLine << endl;
     }

@@ -1,5 +1,4 @@
 #include "include/myLib.hpp"
-#include "include/struct.hpp"
 #include "include/student.hpp"
 #include "include/console.hpp"
 #include "include/input.hpp"

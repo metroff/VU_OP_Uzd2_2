@@ -21,11 +21,14 @@ void readFromFile(string fileName, Container &students){
         int lineNum = 1;
         // Dalinama eilutėmis
         while(getline(ss, line)) {
-            Student student;
+            string firstName;
+            string lastName;
 
             std::stringstream line_stream(line);
-            line_stream >> student.firstName;
-            line_stream >> student.lastName;
+            line_stream >> firstName;
+            line_stream >> lastName;
+
+            Student student(firstName, lastName);
 
             int grade;
 
@@ -34,19 +37,18 @@ void readFromFile(string fileName, Container &students){
                     if(line_stream.fail() || !isValidGrade(grade)){
                         throw GradeException();
                     }
-                    student.grades.push_back(grade);
+                    student.addGrade(grade);
                 }
             } catch (GradeException) {
                 cout << "Nuskaitymo klaida " << lineNum << " eileje. Studentas praleistas.\n";
-                student.grades.clear();
+                student.clearGrades();
                 lineNum++;
                 continue;
             }
 
-            student.examGrade = student.grades.back();
-            student.grades.pop_back();
+            student.setExamGradeFromGrades();
 
-            processGrades(student);
+            student.processGrades();
 
             students.push_back(student);
 

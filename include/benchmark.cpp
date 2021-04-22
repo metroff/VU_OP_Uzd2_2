@@ -55,7 +55,7 @@ void runBenchmark(int stage, string containerCode, int strategyType) {
         timer.reset();
 
         typename Container::iterator it = std::find_if(benchStudents.begin(), benchStudents.end(), 
-                                                [](const Student &s) {return s.finalMeanGrade >= splitLimit;});
+                                                [](const Student &s) {return s.getFinalMeanGrade() >= splitLimit;});
 
         switch(strategyType) {
             case 1: 

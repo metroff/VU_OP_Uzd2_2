@@ -3,7 +3,7 @@
 #define splitLimit 5
 
 #include "myLib.hpp"
-#include "struct.hpp"
+#include "student.hpp"
 #include "file.hpp"
 #include "output.hpp"
 #include "timer.hpp"

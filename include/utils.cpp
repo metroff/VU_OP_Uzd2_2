@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
 bool compareStudents(Student a, Student b) {
-    return (a.lastName == b.lastName) ? a.firstName < b.firstName : a.lastName < b.lastName;
+    return (a.getLastName() == b.getLastName()) ? a.getFirstName() < b.getFirstName() : a.getLastName() < b.getLastName();
 }
 
 bool isValidGrade(int grade){

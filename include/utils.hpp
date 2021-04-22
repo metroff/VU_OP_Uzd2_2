@@ -4,7 +4,7 @@
 #define GRADE_MAX 10
 
 #include "myLib.hpp"
-#include "struct.hpp"
+#include "student.hpp"
 #include <algorithm>
 
 bool isValidGrade(int);
