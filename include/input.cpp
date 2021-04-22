@@ -1,23 +1,5 @@
 #include "input.hpp"
 
-// Sugeneruojami pažymiai
-void generateGrades(Student &student, int numOfGrades) {
-    RandInt rnd{1, 10};
-    // Nustatomas pažymių kiekis
-    if (numOfGrades == -1) {
-        numOfGrades = rnd();
-    }
-    // Sugeneruojami ir išspausdinami pažymaiai
-    cout << "Sugeneruoti " << numOfGrades << " pazymiai: ";
-    for (int i = 0; i < numOfGrades; i++) {
-        int grade = rnd();
-        student.addGrade(grade);
-        cout << grade << " ";
-    }
-    student.setExamGrade(rnd());
-    cout << "\nSugeneruotas galutinis pazymys: " << student.getExamGrade() << endl;
-}
-
 // Pažymių įvedimas rankiniu budu
 void inputGrades(Student &student, int numOfGrades) {
     // Nustatoma ar žinomas pažymių kiekis
@@ -63,7 +45,7 @@ void manualInput(vector<Student> &students) {
 
         if (numOfGrades != 0) {
             if (yesNoQuestion("Ar norite atsitiktinai sugeneruoti pazymius?"))
-                generateGrades(student, numOfGrades);
+                student.generateGrades(numOfGrades);
             else
                 inputGrades(student, numOfGrades);
         } else {

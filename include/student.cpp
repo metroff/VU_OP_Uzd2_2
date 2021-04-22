@@ -46,12 +46,30 @@ void Student::processGrades() {
 
 void Student::clearGrades() {
     grades.clear();
-};
+}
 
 void Student::setExamGradeFromGrades() {
     examGrade = grades.back();
     grades.pop_back();
-};
+}
+
+// Sugeneruojami pažymiai
+void Student::generateGrades(int numOfGrades) {
+    RandInt rnd{1, 10};
+    // Nustatomas pažymių kiekis
+    if (numOfGrades == -1) {
+        numOfGrades = rnd();
+    }
+    // Sugeneruojami ir išspausdinami pažymaiai
+    cout << "Sugeneruoti " << numOfGrades << " pazymiai: ";
+    for (int i = 0; i < numOfGrades; i++) {
+        int grade = rnd();
+        grades.push_back(grade);
+        cout << grade << " ";
+    }
+    examGrade = rnd();
+    cout << "\nSugeneruotas galutinis pazymys: " << examGrade << endl;
+}
 
 bool Student::operator < (const Student &student) {
     return finalMeanGrade < student.finalMeanGrade;

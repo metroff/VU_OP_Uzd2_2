@@ -2,6 +2,7 @@
 
 #include "myLib.hpp"
 #include "math.hpp"
+#include "rng.hpp"
 
 class Student {
     private:
@@ -28,6 +29,8 @@ class Student {
         void processGrades();
         void clearGrades();
         void setExamGradeFromGrades();
+        // Sugeneruojami pažymiai
+        void generateGrades(int);
 
         bool operator < (const Student &);
         bool compareByFullName(const Student &);
