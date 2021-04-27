@@ -10,6 +10,31 @@ Student::Student(std::stringstream &stream) {
     readStudent(stream);
 }
 
+Student::Student(const Student& newStudent) {
+    firstName = newStudent.firstName;
+    lastName = newStudent.lastName;
+    grades = newStudent.grades;
+    examGrade = newStudent.examGrade;
+    finalMeanGrade = newStudent.finalMeanGrade;
+    finalMedianGrade = newStudent.finalMedianGrade;
+}
+
+Student::~Student() = default;
+
+Student& Student::operator = (const Student& newStudent) {
+    if (&newStudent == this)
+        return *this;
+
+    firstName = newStudent.firstName;
+    lastName = newStudent.lastName;
+    grades = newStudent.grades;
+    examGrade = newStudent.examGrade;
+    finalMeanGrade = newStudent.finalMeanGrade;
+    finalMedianGrade = newStudent.finalMedianGrade;
+
+    return *this;
+}
+
 // Getter'iai
 string Student::getFirstName() const {
     return firstName;
