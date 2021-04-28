@@ -20,9 +20,12 @@ class Student {
         double finalMedianGrade;
 
     public:
-        Student() : examGrade(0), finalMedianGrade(0), finalMeanGrade(0) {}
+        Student() : firstName(""), lastName(""), examGrade(0), finalMedianGrade(0), finalMeanGrade(0) {}
         Student(const string &, const string &);
         Student(std::stringstream &);
+        Student(const Student&);
+        Student(Student&&);
+        ~Student();
 
         // Getter'iai
         string getFirstName() const;
@@ -40,6 +43,9 @@ class Student {
         void processGrades();
         void clearGrades();
         void generateGrades(int);
+
+        Student& operator = (const Student&);
+        Student& operator = (Student&&);
 
         // Palyginimas
         bool operator < (const Student &);

@@ -1,7 +1,7 @@
 #include "student.hpp"
 
 // Konstruktoriai
-Student::Student(const string & firstName, const string & lastName) {
+Student::Student(const string & firstName, const string & lastName) : Student() {
     this->firstName = firstName;
     this->lastName = lastName;
 }
@@ -9,6 +9,68 @@ Student::Student(const string & firstName, const string & lastName) {
 Student::Student(std::stringstream &stream) {
     readStudent(stream);
 }
+
+Student::Student(const Student& newStudent) {
+    firstName = newStudent.firstName;
+    lastName = newStudent.lastName;
+    grades = newStudent.grades;
+    examGrade = newStudent.examGrade;
+    finalMeanGrade = newStudent.finalMeanGrade;
+    finalMedianGrade = newStudent.finalMedianGrade;
+}
+
+Student::Student(Student&& newStudent) {
+    firstName = std::move(newStudent.firstName);
+    lastName = std::move(newStudent.lastName);
+    grades = std::move(newStudent.grades);
+    examGrade = std::move(newStudent.examGrade);
+    finalMeanGrade = std::move(newStudent.finalMeanGrade);
+    finalMedianGrade = std::move(newStudent.finalMedianGrade);
+
+    newStudent.firstName = "";
+    newStudent.lastName = "";
+    newStudent.grades.clear();
+    newStudent.examGrade = 0;
+    newStudent.finalMeanGrade = 0;
+    newStudent.finalMedianGrade = 0;
+}
+
+Student::~Student() = default;
+
+Student& Student::operator = (const Student& newStudent) {
+    if (&newStudent == this)
+        return *this;
+
+    firstName = newStudent.firstName;
+    lastName = newStudent.lastName;
+    grades = newStudent.grades;
+    examGrade = newStudent.examGrade;
+    finalMeanGrade = newStudent.finalMeanGrade;
+    finalMedianGrade = newStudent.finalMedianGrade;
+
+    return *this;
+}
+
+Student& Student::operator = (Student&& newStudent) {
+    if (&newStudent == this)
+        return *this;
+
+    firstName = std::move(newStudent.firstName);
+    lastName = std::move(newStudent.lastName);
+    grades = std::move(newStudent.grades);
+    examGrade = std::move(newStudent.examGrade);
+    finalMeanGrade = std::move(newStudent.finalMeanGrade);
+    finalMedianGrade = std::move(newStudent.finalMedianGrade);
+
+    newStudent.firstName = "";
+    newStudent.lastName = "";
+    newStudent.grades.clear();
+    newStudent.examGrade = 0;
+    newStudent.finalMeanGrade = 0;
+    newStudent.finalMedianGrade = 0;
+
+    return *this;
+};
 
 // Getter'iai
 string Student::getFirstName() const {
