@@ -1,5 +1,18 @@
 #include "benchmark.hpp"
 
+void runBenchmarkWizard() {
+    int stage = getInt("Pasirinkite maksimalu irasu kieki (1 - 1000, 2 - 10000, 3 - 100000, 4 - 1000000, 5 - 10000000): ", 1, 5);
+    int type = getInt("Pasirinkite duomenu konteinerio tipa (1 - Vector, 2 - Deque, 3 - List ): ", 1, 3);
+    int strategy = getInt("Pasirinkite duomenu konteinerio skirstymo strategija (1-4): ", 1, 4);
+
+    switch(type) {
+        case 1: runBenchmark<vector<Student>>(stage, "VECTOR", strategy); break;
+        case 2: runBenchmark<deque<Student>>(stage, "DEQUE", strategy); break;
+        case 3: runBenchmark<list<Student>>(stage, "LIST", strategy); break;
+        default: cout << "Type: 1-Vector, 2-Deque, 3-List" << endl; break;
+    }
+}
+
 template <class Container>
 void runBenchmark(int stage, string containerCode, int strategyType) {
     Timer timer;

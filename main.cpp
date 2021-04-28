@@ -9,23 +9,8 @@
 
 int main(int argc, char* argv[]) {
     if(argc>=2) {
-        if(string(argv[1]) == "-bench") {    
-            if(argc < 5) {
-                cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [1-4])" << endl;
-                return 0;
-            }        
-            int stage = atoi(argv[2]);
-            int strategy = atoi(argv[4]);
-            if (stage >= 1 && stage <= 5 && strategy >= 1 && strategy <= 4 ) {
-                int type = atoi(argv[3]);
-                switch(type) {
-                    case 0: runBenchmark<vector<Student>>(stage, "VECTOR", strategy); break;
-                    case 1: runBenchmark<deque<Student>>(stage, "DEQUE", strategy); break;
-                    case 2: runBenchmark<list<Student>>(stage, "LIST", strategy); break;
-                    default: cout << "Type: 0-Vector, 1-Deque, 2-List" << endl;
-                }
-            }
-            else cout << "Usage: " << argv[0] << "-bench (stage [1-5]) (container type [0-2]) (strategy type [1-4])" << endl;
+        if(string(argv[1]) == "-bench") {
+            runBenchmarkWizard();
             return 0;
         }
     }

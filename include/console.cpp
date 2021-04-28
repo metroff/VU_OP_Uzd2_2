@@ -74,3 +74,15 @@ OutputType getOutputType() {
     return OutputType::BOTH;
 }
 
+// Integer klausimas
+int getInt(string message, int low, int high) {
+    int answer = -10;
+    while (answer < low || answer > high) {
+        cout << message;
+        cin >> answer;
+        if (cin.fail())
+            clearLine();
+    }
+    clearLine();
+    return answer;
+}
