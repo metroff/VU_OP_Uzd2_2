@@ -181,6 +181,7 @@ Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su 
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v1.5](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.5) - Šioje versijoje sukurta abstrakti `Human` klasė, kuri naudojama išvestinėje `Student` klasėje.
 - [v1.2](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.2) - Šioje versijoje `Student` klasėje implementuota `c++` penkių taisyklė, t.y. pridėtas kopijavimo ir perkėlimo konstruktoriai ir operatoriai, taip pat nurodytas destruktorius.
 - [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1) - Šioje versijoje naudojama Studento klasė vietoj struktūros. Spartos analizę tarp struktūros ir klasės galima rasti [čia](#spartos-analizė-tarp-struktūros-ir-klasės).
 - [v1.0](https://github.com/metroff/VU_OP_uzd2/releases/tag/v1.0) - Šioje versijoje pridėta [konteinerio skirstymo spartos analizė](#konteinerio-skirstymo-spartos-analizė). Pridėtas skirstymo strategijos pasirinkimas.
