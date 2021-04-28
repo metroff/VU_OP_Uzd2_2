@@ -65,15 +65,15 @@ Vardenis       Pavardenis      7.76
 ```
 ## Spartos analizė (benchmark)
 
-Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./main` (Linux aplinkoje) pridedant vėliavą `-bench`, etapo skaičių tarp `1 ir 5` ir duomenų konteinerio tipo skaičių tarp `0 ir 2`.
-> Pirmas skaicius (etapas): \
+Programos veikimo spartos analizė paleidžiama komandinėje eilutėje prie `./main` (Linux aplinkoje) pridedant vėliavą `-bench`.
+> Etapai: \
 > 1 - 1000 įrašų, 2 - 10000 įrašų, 3 - 100000 įrašų, 4 - 1000000 įrašų, 5 - 10000000 įrašų \
-> Antras skaicius (duomenų konteinerio tipas): \
+> Duomenų konteinerio tipai: \
 > 0 - Vector, 1 - Deque, 2 - List \
-> Trečias skaicius (duomenų konteinerio skirstymo strategija) \
+> Duomenų konteinerio skirstymo strategijos: \
 > Strategijas žiūrėti [čia](#konteinerio-skirstymo-spartos-analizė).
 ```
-./main -bench [1-5] [0-2] [1-4]
+./main -bench
 ```
 
 Testavimo sistema:
