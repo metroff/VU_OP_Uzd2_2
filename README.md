@@ -181,6 +181,7 @@ Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su 
 3. Pasileisti sukompiliuotą failą.
 
 ## Changelog
+- [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1) - Šioje versijoje `Student` klasėje implementuota `c++` trijų taisyklė, t.y. pridėtas kopijavimo konstruktorius ir operatorius, taip pat nurodytas destruktorius.
 - [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1) - Šioje versijoje naudojama Studento klasė vietoj struktūros. Spartos analizę tarp struktūros ir klasės galima rasti [čia](#spartos-analizė-tarp-struktūros-ir-klasės).
 - [v1.0](https://github.com/metroff/VU_OP_uzd2/releases/tag/v1.0) - Šioje versijoje pridėta [konteinerio skirstymo spartos analizė](#konteinerio-skirstymo-spartos-analizė). Pridėtas skirstymo strategijos pasirinkimas.
 - [v0.5](https://github.com/metroff/VU_OP_uzd2/releases/tag/v0.5) - Šioje versijoje patobulinta [spartos analizė](#spartos-analizė-benchmark). Pridėtas duomenų konteinerio (`Vector`, `Deque`, `List`) pasirinkimas.
