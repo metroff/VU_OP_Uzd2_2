@@ -182,6 +182,7 @@ Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su 
 4. Pasileisti sukompiliuotą / įdiegtą failą.
 
 ## Changelog
+- [v2.0](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v2.0) - Šioje versijoje pridėta `doxygen` dokumentacija, pridėti Unit Testai. Taip pat pridėtas Windows automatinio įdiegimo failas.
 - [v1.5](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.5) - Šioje versijoje sukurta abstrakti `Human` klasė, kuri naudojama išvestinėje `Student` klasėje.
 - [v1.2](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.2) - Šioje versijoje `Student` klasėje implementuota `c++` penkių taisyklė, t.y. pridėtas kopijavimo ir perkėlimo konstruktoriai ir operatoriai, taip pat nurodytas destruktorius.
 - [v1.1](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.1) - Šioje versijoje naudojama Studento klasė vietoj struktūros. Spartos analizę tarp struktūros ir klasės galima rasti [čia](#spartos-analizė-tarp-struktūros-ir-klasės).
