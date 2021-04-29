@@ -93,6 +93,10 @@ double Student::getFinalMedianGrade() const {
     return finalMedianGrade;
 }
 
+int Student::getGradeCount() const {
+    return grades.size();
+}
+
 // Setter'iai
 void Student::setExamGrade(int examGrade) {
     this->examGrade = examGrade;

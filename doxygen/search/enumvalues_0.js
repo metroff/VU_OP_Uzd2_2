@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['both_169',['BOTH',['../console_8hpp.html#a4e0517338e6c4a31a2addafc06d4f3a3a6328e5e3186c227a021ef2ff77e40197',1,'console.hpp']]]
+];

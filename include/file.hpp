@@ -8,6 +8,7 @@
 #include "rng.hpp"
 #include <sstream>
 
+/// @brief Custom exception klasė.
 class FileNotFound{};
 
 bool checkIfFileExists(const string&);

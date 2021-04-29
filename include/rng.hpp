@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 
+/// @brief RandInt klasė naudojama atsitiktiniams skaičiams (Int) generuoti.
 class RandInt {
     public:
         RandInt(int low, int high) : mt{rd()}, dist{low, high} { }

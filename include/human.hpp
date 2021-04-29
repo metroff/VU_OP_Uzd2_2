@@ -2,6 +2,7 @@
 
 #include <string>
 
+/// @brief Human klasė sauganti žmogaus vardą ir pavardę.
 class Human {
     protected:
         std::string firstName;

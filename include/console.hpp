@@ -14,3 +14,4 @@ int getNumOfGrades();
 int getGrade(bool exit_state = false);
 bool yesNoQuestion(string);
 OutputType getOutputType();
+int getInt(string, int, int);
