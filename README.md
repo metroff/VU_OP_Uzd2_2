@@ -169,7 +169,7 @@ Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su 
 ## Įdiegimo instrukcija
 
 1. Iš [Releases](https://github.com/metroff/VU_OP_uzd2/releases) aplanko parsisiųskite vieną iš programos versijų ir ją išsiarchyvuokite.
-2. Susikompiliuoti `main.cpp` ir `include` aplanke esančius failus naudojant įrankius, kurie palaiko **C++11**.
+2. (Linux aplinkoje) Susikompiliuoti `main.cpp` ir `include` aplanke esančius failus naudojant įrankius, kurie palaiko **C++11**.
     - Naudojant g++ įrankį (Linux aplinkoje):
     ```
     g++ -std=c++11 include/*.cpp main.cpp -o main && ./main
@@ -178,7 +178,8 @@ Programa greičiausiai veikia naudojant O3 optimizaciją ir Studento klasę. Su 
     ```
     make && ./main
     ```
-3. Pasileisti sukompiliuotą failą.
+3. (Windows aplinkoje) Pasileisti `setup.exe` failą, kuri galima rasti `release/Windows x64` aplanke.
+4. Pasileisti sukompiliuotą / įdiegtą failą.
 
 ## Changelog
 - [v1.5](https://github.com/metroff/VU_OP_uzd2_2/releases/tag/v1.5) - Šioje versijoje sukurta abstrakti `Human` klasė, kuri naudojama išvestinėje `Student` klasėje.
