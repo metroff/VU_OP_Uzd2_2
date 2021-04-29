@@ -32,6 +32,7 @@ class Student : public Human {
         int getExamGrade() const;
         double getFinalMeanGrade() const;
         double getFinalMedianGrade() const;
+        int getGradeCount() const;
 
         // Setter'iai
         void setExamGrade(int);
