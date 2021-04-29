@@ -9,8 +9,10 @@
 #include "rng.hpp"
 
 // Exception, kuris yra išmetamas
+/// @brief Custom exception klasė.
 class GradeException{};
 
+/// @brief Student klasė sauganti studento duomenis, kurie reikalingi apskaitai.
 class Student : public Human {
     private:
         vector<int> grades;
